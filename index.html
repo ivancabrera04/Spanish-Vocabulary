@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Vocabulario</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#0f0e0c;--surface:#1a1915;--surface2:#222018;
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#7a6030;
+  --cream:#f0e8d5;--muted:#6a6050;--muted2:#9a8e78;
+  --green:#4caf7d;--red:#e05c5c;--blue:#5c8fc9;
+  --border:#2a2720;
+  --sidebar:220px;
+}
+html,body{height:100%;margin:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--cream);display:flex;min-height:100vh;}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:28px 0 24px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:10;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.sidebar-logo{padding:0 20px 28px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.sidebar-logo h1{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);line-height:1.1;}
+.sidebar-logo p{font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;}
+.sidebar-section{padding:0 12px;margin-bottom:6px;}
+.sidebar-section-label{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);padding:0 8px;margin-bottom:6px;margin-top:14px;display:block;}
+.nav-item{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;border-radius:8px;border:none;background:transparent;color:var(--muted2);font-family:'DM Sans',sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.18s;width:100%;text-align:left;line-height:1.35;}
+.nav-item:hover{background:var(--surface2);color:var(--cream);}
+.nav-item.active,.nav-item.active-dir{background:rgba(201,168,76,0.12);color:var(--gold);}
+.nav-item .nav-icon{font-size:0.9rem;flex-shrink:0;margin-top:1px;}
+.nav-item .nav-label{flex:1;}
+.sidebar-bottom{margin-top:auto;padding:16px 12px 0;border-top:1px solid var(--border);}
+.save-float-btn{width:100%;padding:10px;background:var(--gold);color:var(--bg);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:background 0.2s;}
+.save-float-btn:hover{background:var(--gold-light);}
+
+/* ── MAIN CONTENT ── */
+.main{margin-left:var(--sidebar);flex:1;min-height:100vh;padding:40px 32px 80px;display:flex;flex-direction:column;align-items:center;width:calc(100vw - var(--sidebar));}
+
+/* ── PAGES ── */
+.page{display:none;width:100%;max-width:600px;flex-direction:column;align-items:center;margin:0 auto;}
+.page.active{display:flex;}
+
+/* ── HOME PAGE ── */
+.home-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);color:var(--gold);text-align:center;margin-bottom:8px;}
+.home-sub{font-size:0.8rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-bottom:40px;}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;width:100%;}
+.deck-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:all 0.2s;text-align:left;}
+.deck-card:hover{border-color:var(--gold-dim);transform:translateY(-2px);}
+.deck-card.active-deck{border-color:var(--gold);}
+.deck-card-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--cream);margin-bottom:4px;line-height:1.3;}
+.deck-card-count{font-size:0.72rem;color:var(--muted);margin-bottom:12px;}
+.deck-card-btn{font-size:0.75rem;color:var(--gold);letter-spacing:0.06em;}
+
+/* ── CONTROLS ── */
+.controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:20px;width:100%;}
+.control-group{display:flex;flex-direction:column;gap:5px;align-items:center;}
+.control-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);}
+.btn-group{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
+.btn{padding:7px 13px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted2);font-family:'DM Sans',sans-serif;font-size:0.8rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.03em;white-space:normal;text-align:center;line-height:1.3;}
+.btn:hover{border-color:var(--gold-dim);color:var(--cream);}
+.btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:600;}
+.page-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);margin-bottom:4px;text-align:center;}
+.page-sub{font-size:0.72rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:24px;text-align:center;}
+
+/* PROGRESS */
+.progress-wrap{width:100%;display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:20px;}
+.progress-bar-bg{width:100%;max-width:500px;height:2px;background:var(--border);border-radius:2px;}
+.progress-bar-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.4s ease;}
+.progress-text{font-size:0.75rem;color:var(--muted);letter-spacing:0.04em;}
+
+/* CARD */
+.card-wrap{perspective:1400px;width:100%;max-width:500px;height:260px;margin-bottom:24px;cursor:pointer;}
+.card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);-webkit-transition:-webkit-transform 0.5s cubic-bezier(0.4,0,0.2,1);}
+.card-inner.flipped{transform:rotateY(180deg);-webkit-transform:rotateY(180deg);}
+.card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;border:1px solid var(--border);-webkit-transform:translateZ(0);}
+.card-front{background:var(--surface);background-image:radial-gradient(ellipse at 15% 15%,#252218 0%,transparent 55%);}
+.card-back{background:#161510;background-image:radial-gradient(ellipse at 85% 85%,#1e1b0e 0%,transparent 55%);transform:rotateY(180deg);-webkit-transform:rotateY(180deg);}
+.card-badges{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;}
+.badge{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;padding:3px 8px;border-radius:20px;}
+.badge-cat{color:var(--muted);background:var(--surface2);}
+.badge-yours{color:var(--gold);background:#241f0a;}
+.badge-custom{color:var(--blue);background:#0e1820;}
+.card-lang{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:14px;}
+.card-word{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3.8vw,2rem);color:var(--cream);text-align:center;line-height:1.3;}
+.card-back .card-word{color:var(--gold-light);}
+.card-tap{font-size:0.72rem;color:var(--muted);margin-top:18px;letter-spacing:0.06em;}
+
+/* ANSWER BUTTONS */
+.answer-btns{display:flex;gap:14px;margin-bottom:28px;opacity:0;pointer-events:none;transition:opacity 0.25s;transform:translateY(6px);}
+.answer-btns.visible{opacity:1;pointer-events:all;transform:translateY(0);}
+.answer-btn{padding:11px 30px;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.18s;letter-spacing:0.04em;}
+.btn-correct{background:var(--green);color:#fff;}
+.btn-correct:hover{background:#3c9e6a;transform:translateY(-2px);}
+.btn-wrong{background:var(--red);color:#fff;}
+.btn-wrong:hover{background:#c94e4e;transform:translateY(-2px);}
+.btn-archive{background:#2a2820;color:var(--muted2);border:1px solid var(--border);padding:11px 18px;}
+.btn-archive:hover{background:#3a3525;color:var(--cream);transform:translateY(-2px);}
+
+/* SCORE ROW */
+.score-row{display:flex;gap:28px;margin-bottom:6px;}
+.score-item{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.score-num{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--cream);}
+.score-num.g{color:var(--green);} .score-num.r{color:var(--red);}
+.score-lbl{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+
+/* SUMMARY */
+.summary{display:none;flex-direction:column;align-items:center;gap:18px;width:100%;}
+.summary.show{display:flex;}
+.summary-title{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);}
+.summary-score{font-size:0.95rem;color:var(--cream);text-align:center;line-height:1.6;}
+.summary-stats{display:flex;gap:32px;margin:8px 0;}
+.restart-btn{padding:11px 36px;background:var(--gold);color:var(--bg);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:600;cursor:pointer;transition:background 0.2s;letter-spacing:0.04em;}
+.restart-btn:hover{background:var(--gold-light);}
+
+/* HISTORY */
+.history-section{width:100%;max-width:500px;margin-top:16px;}
+.history-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;text-align:center;}
+.history-list{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto;}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--border);font-size:0.8rem;}
+.history-score{color:var(--gold);}
+
+/* ADD WORDS */
+.add-panel{width:100%;}
+.add-form{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
+.add-form h3{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);margin-bottom:16px;}
+.form-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.form-field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:140px;}
+.form-field label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+.form-field input,.form-field select{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;transition:border-color 0.2s;}
+.form-field input:focus,.form-field select:focus{border-color:var(--gold-dim);}
+.form-field select option{background:var(--bg);}
+.add-submit{padding:10px 24px;background:var(--gold);color:var(--bg);border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:background 0.2s;margin-top:4px;}
+.add-submit:hover{background:var(--gold-light);}
+.add-success{color:var(--green);font-size:0.82rem;margin-top:8px;min-height:20px;transition:opacity 0.3s;}
+.custom-list-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;}
+.custom-list-wrap h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:14px;}
+.custom-list{display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto;}
+.custom-item{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+.custom-item-text{display:flex;flex-direction:column;gap:2px;}
+.custom-es{font-size:0.88rem;color:var(--cream);}
+.custom-en{font-size:0.76rem;color:var(--muted2);}
+.custom-meta{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+.delete-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:2px 6px;border-radius:4px;transition:color 0.2s;}
+.delete-btn:hover{color:var(--red);}
+.empty-state{color:var(--muted);font-size:0.85rem;text-align:center;padding:20px 0;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;margin-bottom:20px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;flex-direction:column;gap:4px;}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);}
+.stat-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+.deck-count{font-size:0.75rem;color:var(--muted);margin-bottom:14px;}
+
+/* ARCHIVE */
+.archive-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;width:100%;}
+.archive-wrap h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:6px;}
+.archive-subtitle{font-size:0.75rem;color:var(--muted);margin-bottom:14px;}
+.archive-list{display:flex;flex-direction:column;gap:6px;max-height:400px;overflow-y:auto;}
+.archive-item{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);}
+.archive-item-text{display:flex;flex-direction:column;gap:2px;}
+.archive-restore-btn{background:none;border:1px solid var(--border);color:var(--muted2);cursor:pointer;font-size:0.72rem;padding:4px 10px;border-radius:5px;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.archive-restore-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* SAVE */
+.save-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;width:100%;margin-bottom:16px;}
+.save-section h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:6px;}
+.save-subtitle{font-size:0.75rem;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.save-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.save-btn{padding:9px 20px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.2s;}
+.save-btn:hover{border-color:var(--gold);color:var(--gold);}
+.save-btn.primary{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:600;}
+.save-btn.primary:hover{background:var(--gold-light);}
+.save-msg{font-size:0.78rem;color:var(--green);margin-top:8px;min-height:18px;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* MOBILE SIDEBAR TOGGLE */
+.menu-toggle{display:none;position:fixed;top:14px;left:14px;z-index:20;background:var(--surface);border:1px solid var(--border);color:var(--cream);border-radius:7px;padding:8px 12px;font-size:1rem;cursor:pointer;}
+@media(max-width:640px){
+  .sidebar{transform:translateX(-100%);-webkit-transform:translateX(-100%);transition:transform 0.28s ease;-webkit-transition:-webkit-transform 0.28s ease;}
+  .sidebar.open{transform:translateX(0);-webkit-transform:translateX(0);}
+  .main{margin-left:0;width:100vw;padding:60px 16px 80px;align-items:center;}
+  .menu-toggle{display:block;}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9;-webkit-tap-highlight-color:transparent;}
+  .overlay.show{display:block;}
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <h1>Vocabulario</h1>
+    <p>Latin American Spanish</p>
+  </div>
+  <div class="sidebar-section">
+    <button class="nav-item active" id="nav-home" onclick="showPage('home',this)">Home</button>
+  </div>
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Your Words</span>
+    <button class="nav-item" onclick="showPage('study',this,'yours')">Your Vocabulary</button>
+    <button class="nav-item" onclick="showPage('study',this,'custom')">Added by You</button>
+  </div>
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Books</span>
+    <button class="nav-item" onclick="showPage('study',this,'ciudad')">La Ciudad y los Perros</button>
+    <button class="nav-item" onclick="showPage('study',this,'cronica')">Crónica de una Muerte Anunciada</button>
+  </div>
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Category</span>
+    <button class="nav-item" id="cat-all" onclick="setSidebarCat('all',this)">All Categories</button>
+    <button class="nav-item" onclick="setSidebarCat('food',this)">Food</button>
+    <button class="nav-item" onclick="setSidebarCat('objects',this)">Objects</button>
+    <button class="nav-item" onclick="setSidebarCat('body',this)">Body</button>
+    <button class="nav-item" onclick="setSidebarCat('emotions',this)">Emotions</button>
+    <button class="nav-item" onclick="setSidebarCat('nature',this)">Nature</button>
+    <button class="nav-item" onclick="setSidebarCat('literary',this)">Literary</button>
+    <button class="nav-item" onclick="setSidebarCat('misc',this)">Misc</button>
+  </div>
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Direction</span>
+    <button class="nav-item active-dir" id="dir-es-en" onclick="setSidebarDir('es-en',this)">Spanish → English</button>
+    <button class="nav-item" id="dir-en-es" onclick="setSidebarDir('en-es',this)">English → Spanish</button>
+  </div>
+  <div class="sidebar-section">
+    <span class="sidebar-section-label">Manage</span>
+    <button class="nav-item" onclick="showPage('add',this)">Add Words</button>
+    <button class="nav-item" onclick="showPage('archive',this)">Archive</button>
+    <button class="nav-item" onclick="showPage('stats',this)">Stats</button>
+  </div>
+  <div class="sidebar-bottom">
+    <button class="save-float-btn" onclick="saveAndDownload()">Save</button>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div class="home-title">Vocabulario</div>
+  <p class="home-sub">Latin American Spanish · Personal Deck</p>
+  <div class="deck-grid">
+    <div class="deck-card" onclick="showPage('study',null,'yours')">
+      <div class="deck-card-title">Your Vocabulary</div>
+      <div class="deck-card-count" id="home-count-yours"></div>
+      <div class="deck-card-btn">Study →</div>
+    </div>
+    <div class="deck-card" onclick="showPage('study',null,'ciudad')">
+      <div class="deck-card-title">La Ciudad y los Perros</div>
+      <div class="deck-card-count" id="home-count-ciudad"></div>
+      <div class="deck-card-btn">Study →</div>
+    </div>
+    <div class="deck-card" onclick="showPage('study',null,'cronica')">
+      <div class="deck-card-title">Crónica de una Muerte Anunciada</div>
+      <div class="deck-card-count" id="home-count-cronica"></div>
+      <div class="deck-card-btn">Study →</div>
+    </div>
+    <div class="deck-card" onclick="showPage('study',null,'all')">
+      <div class="deck-card-title">All Cards</div>
+      <div class="deck-card-count" id="home-count-all"></div>
+      <div class="deck-card-btn">Study →</div>
+    </div>
+    <div class="deck-card" onclick="showPage('study',null,'custom')">
+      <div class="deck-card-title">Added by You</div>
+      <div class="deck-card-count" id="home-count-custom"></div>
+      <div class="deck-card-btn">Study →</div>
+    </div>
+  </div>
+</div>
+
+<!-- STUDY PAGE -->
+<div class="page" id="page-study">
+  <div class="page-title" id="study-page-title">Study</div>
+  <p class="page-sub" id="study-page-sub"></p>
+  <p class="deck-count" id="deck-count"></p>
+  <div class="progress-wrap">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
+    <span class="progress-text" id="progress-text"></span>
+  </div>
+  <div id="study-main">
+    <div class="card-wrap" onclick="flipCard()">
+      <div class="card-inner" id="card-inner">
+        <div class="card-face card-front">
+          <div class="card-badges">
+            <span class="badge badge-yours" id="card-src-badge"></span>
+            <span class="badge badge-cat" id="card-cat-badge"></span>
+          </div>
+          <span class="card-lang" id="front-lang"></span>
+          <div class="card-word" id="front-word"></div>
+          <span class="card-tap">tap to reveal</span>
+        </div>
+        <div class="card-face card-back">
+          <span class="card-lang" id="back-lang"></span>
+          <div class="card-word" id="back-word"></div>
+          <span class="card-tap">tap to flip back</span>
+        </div>
+      </div>
+    </div>
+    <div class="answer-btns" id="answer-btns">
+      <button class="answer-btn btn-wrong" onclick="answer(false)">Missed it</button>
+      <button class="answer-btn btn-correct" onclick="answer(true)">Got it</button>
+      <button class="answer-btn btn-archive" onclick="archiveCurrent()">Archive</button>
+    </div>
+    <div class="score-row">
+      <div class="score-item"><span class="score-num" id="s-total">0</span><span class="score-lbl">Cards</span></div>
+      <div class="score-item"><span class="score-num g" id="s-correct">0</span><span class="score-lbl">Correct</span></div>
+      <div class="score-item"><span class="score-num r" id="s-wrong">0</span><span class="score-lbl">Missed</span></div>
+    </div>
+  </div>
+  <div class="summary" id="summary">
+    <div class="summary-title">¡Bien hecho!</div>
+    <p class="summary-score" id="summary-text"></p>
+    <div class="summary-stats">
+      <div class="score-item"><span class="score-num g" id="sum-correct">0</span><span class="score-lbl">Correct</span></div>
+      <div class="score-item"><span class="score-num r" id="sum-wrong">0</span><span class="score-lbl">Missed</span></div>
+    </div>
+    <button class="restart-btn" onclick="restart()">Play Again</button>
+    <div class="history-section">
+      <div class="history-title">Session History</div>
+      <div class="history-list" id="history-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD WORDS PAGE -->
+<div class="page" id="page-add">
+  <div class="page-title">Add Words</div>
+  <p class="page-sub">Build your personal deck</p>
+  <div class="add-panel">
+    <div class="add-form">
+      <h3>Add a New Word</h3>
+      <div class="form-row">
+        <div class="form-field"><label>Spanish</label><input type="text" id="input-es" placeholder="e.g. la mariposa"/></div>
+        <div class="form-field"><label>English</label><input type="text" id="input-en" placeholder="e.g. butterfly"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Category</label>
+          <select id="input-cat">
+            <option value="misc">Misc</option>
+            <option value="food">Food</option>
+            <option value="objects">Objects</option>
+            <option value="body">Body</option>
+            <option value="emotions">Emotions</option>
+            <option value="nature">Nature</option>
+            <option value="literary">Literary</option>
+          </select>
+        </div>
+      </div>
+      <button class="add-submit" onclick="addCustomWord()">Add Word</button>
+      <p class="add-success" id="add-success"></p>
+    </div>
+    <div class="custom-list-wrap">
+      <h3>Your Added Words <span id="custom-count" style="font-size:0.85rem;color:var(--muted);font-family:'DM Sans',sans-serif;"></span></h3>
+      <div class="custom-list" id="custom-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHIVE PAGE -->
+<div class="page" id="page-archive">
+  <div class="page-title">Archive</div>
+  <p class="page-sub">Words you have mastered</p>
+  <div class="save-section">
+    <h3>Save Progress</h3>
+    <p class="save-subtitle">Your progress saves automatically every time you study, archive, or add words. Tap Save to store your progress manually at any time.</p>
+    <div class="save-btns">
+      <button class="save-btn primary" onclick="saveAndDownload()">Save</button>
+    </div>
+    <p class="save-msg" id="save-msg"></p>
+  </div>
+  <div class="archive-wrap">
+    <h3>Archived Words <span id="archive-count" style="font-size:0.85rem;color:var(--muted);font-family:'DM Sans',sans-serif;"></span></h3>
+    <p class="archive-subtitle">Restore any word to put it back in the active deck.</p>
+    <div class="archive-list" id="archive-list"></div>
+  </div>
+</div>
+
+<!-- STATS PAGE -->
+<div class="page" id="page-stats">
+  <div class="page-title">Stats</div>
+  <p class="page-sub">Your progress over time</p>
+  <div class="stats-grid">
+    <div class="stat-card"><span class="stat-num" id="stat-total-cards">0</span><span class="stat-lbl">Active Cards</span></div>
+    <div class="stat-card"><span class="stat-num" id="stat-custom">0</span><span class="stat-lbl">Words Added</span></div>
+    <div class="stat-card"><span class="stat-num" id="stat-sessions">0</span><span class="stat-lbl">Sessions Played</span></div>
+    <div class="stat-card"><span class="stat-num" id="stat-best">—</span><span class="stat-lbl">Best Score</span></div>
+    <div class="stat-card"><span class="stat-num" id="stat-archived">0</span><span class="stat-lbl">Mastered</span></div>
+  </div>
+  <div class="history-section" style="width:100%;max-width:500px;">
+    <div class="history-title">All Sessions</div>
+    <div class="history-list" id="stats-history-list"></div>
+  </div>
+</div>
+
+</div><!-- end .main -->
+<script>
+// ── BUILT-IN CARDS ──
+const BUILTIN = [
+  // FOOD - preset
+  {es:"el aguacate",en:"avocado",cat:"food",src:"preset"},
+  {es:"el maíz",en:"corn / maize",cat:"food",src:"preset"},
+  {es:"el plátano",en:"banana / plantain",cat:"food",src:"preset"},
+  {es:"el frijol",en:"bean",cat:"food",src:"preset"},
+  {es:"la leche",en:"milk",cat:"food",src:"preset"},
+  {es:"el arroz",en:"rice",cat:"food",src:"preset"},
+  {es:"la carne",en:"meat",cat:"food",src:"preset"},
+  {es:"el pollo",en:"chicken",cat:"food",src:"preset"},
+  {es:"el pan",en:"bread",cat:"food",src:"preset"},
+  {es:"la sal",en:"salt",cat:"food",src:"preset"},
+  {es:"el azúcar",en:"sugar",cat:"food",src:"preset"},
+  {es:"el limón",en:"lemon / lime",cat:"food",src:"preset"},
+  {es:"la cebolla",en:"onion",cat:"food",src:"preset"},
+  {es:"el ajo",en:"garlic",cat:"food",src:"preset"},
+  {es:"el queso",en:"cheese",cat:"food",src:"preset"},
+  {es:"el huevo",en:"egg",cat:"food",src:"preset"},
+  {es:"el tomate",en:"tomato",cat:"food",src:"preset"},
+  {es:"la miel de abeja",en:"bee honey",cat:"food",src:"preset"},
+  {es:"el aceite de ricino",en:"castor oil",cat:"food",src:"preset"},
+  {es:"la naranja",en:"orange",cat:"food",src:"preset"},
+  // OBJECTS - preset
+  {es:"la silla",en:"chair",cat:"objects",src:"preset"},
+  {es:"la mesa",en:"table",cat:"objects",src:"preset"},
+  {es:"la ventana",en:"window",cat:"objects",src:"preset"},
+  {es:"la puerta",en:"door",cat:"objects",src:"preset"},
+  {es:"el espejo",en:"mirror",cat:"objects",src:"preset"},
+  {es:"la llave",en:"key",cat:"objects",src:"preset"},
+  {es:"la cama",en:"bed",cat:"objects",src:"preset"},
+  {es:"el reloj",en:"clock / watch",cat:"objects",src:"preset"},
+  {es:"la lámpara",en:"lamp",cat:"objects",src:"preset"},
+  {es:"la taza",en:"cup / mug",cat:"objects",src:"preset"},
+  {es:"el vaso",en:"glass",cat:"objects",src:"preset"},
+  {es:"la toalla",en:"towel",cat:"objects",src:"preset"},
+  {es:"el paraguas",en:"umbrella",cat:"objects",src:"preset"},
+  {es:"la almohada",en:"pillow",cat:"objects",src:"preset"},
+  {es:"la vela",en:"candle",cat:"objects",src:"preset"},
+  // BODY - preset
+  {es:"la rodilla",en:"knee",cat:"body",src:"preset"},
+  {es:"el codo",en:"elbow",cat:"body",src:"preset"},
+  {es:"el pulgar",en:"thumb",cat:"body",src:"preset"},
+  {es:"la mejilla",en:"cheek",cat:"body",src:"preset"},
+  {es:"la frente",en:"forehead",cat:"body",src:"preset"},
+  {es:"el tobillo",en:"ankle",cat:"body",src:"preset"},
+  {es:"la muñeca",en:"wrist",cat:"body",src:"preset"},
+  {es:"el hombro",en:"shoulder",cat:"body",src:"preset"},
+  {es:"la cadera",en:"hip",cat:"body",src:"preset"},
+  {es:"el pecho",en:"chest",cat:"body",src:"preset"},
+  {es:"la nuca",en:"nape of the neck",cat:"body",src:"preset"},
+  {es:"el mentón",en:"chin",cat:"body",src:"preset"},
+  {es:"la ceja",en:"eyebrow",cat:"body",src:"preset"},
+  {es:"la pestaña",en:"eyelash",cat:"body",src:"preset"},
+  {es:"el talón",en:"heel",cat:"body",src:"preset"},
+  {es:"la palma",en:"palm",cat:"body",src:"preset"},
+  {es:"el cuello",en:"neck",cat:"body",src:"preset"},
+  {es:"la espalda",en:"back",cat:"body",src:"preset"},
+  {es:"el estómago",en:"stomach",cat:"body",src:"preset"},
+  {es:"la lengua",en:"tongue",cat:"body",src:"preset"},
+  // EMOTIONS - preset
+  {es:"la vergüenza",en:"shame / embarrassment",cat:"emotions",src:"preset"},
+  {es:"la lástima",en:"pity / what a shame",cat:"emotions",src:"preset"},
+  {es:"la rabia",en:"anger / rage",cat:"emotions",src:"preset"},
+  {es:"el susto",en:"fright / scare",cat:"emotions",src:"preset"},
+  {es:"la confianza",en:"trust / confidence",cat:"emotions",src:"preset"},
+  {es:"el orgullo",en:"pride",cat:"emotions",src:"preset"},
+  {es:"el asombro",en:"amazement / astonishment",cat:"emotions",src:"preset"},
+  {es:"la añoranza",en:"longing / nostalgia",cat:"emotions",src:"preset"},
+  // MISC - preset
+  {es:"el vecino",en:"neighbor",cat:"misc",src:"preset"},
+  {es:"la madrugada",en:"early morning / dawn hours",cat:"misc",src:"preset"},
+  {es:"el chisme",en:"gossip",cat:"misc",src:"preset"},
+  {es:"la costumbre",en:"habit / custom",cat:"misc",src:"preset"},
+  {es:"el antojo",en:"craving / whim",cat:"misc",src:"preset"},
+  {es:"la queja",en:"complaint",cat:"misc",src:"preset"},
+  {es:"la charla",en:"chat / talk",cat:"misc",src:"preset"},
+  {es:"el retraso",en:"delay",cat:"misc",src:"preset"},
+  {es:"el alboroto",en:"uproar / commotion",cat:"misc",src:"preset"},
+  // YOUR WORDS - body
+  {es:"el vientre",en:"womb / belly / abdomen",cat:"body",src:"yours"},
+  {es:"el pellejo del rostro",en:"skin of the face",cat:"body",src:"yours"},
+  {es:"las cicatrices de viruela",en:"smallpox scars",cat:"body",src:"yours"},
+  {es:"las lágrimas",en:"tears",cat:"body",src:"yours"},
+  {es:"los eructos",en:"burps / belches",cat:"body",src:"yours"},
+  // YOUR WORDS - objects
+  {es:"la bacinilla",en:"chamber pot / bedpan",cat:"objects",src:"yours"},
+  {es:"los candelabros",en:"candelabras / candlesticks",cat:"objects",src:"yours"},
+  {es:"la leontina",en:"watch chain / fob chain",cat:"objects",src:"yours"},
+  {es:"el portón",en:"large gate / main door",cat:"objects",src:"yours"},
+  {es:"la repisa",en:"shelf / ledge",cat:"objects",src:"yours"},
+  {es:"el baúl",en:"trunk / chest",cat:"objects",src:"yours"},
+  {es:"el ataúd",en:"coffin",cat:"objects",src:"yours"},
+  {es:"la mortaja",en:"shroud / burial garment",cat:"objects",src:"yours"},
+  {es:"la telaraña",en:"cobweb / spider's web",cat:"objects",src:"yours"},
+  {es:"los goznes",en:"hinges",cat:"objects",src:"yours"},
+  {es:"las esteras",en:"reed mats / matting",cat:"objects",src:"yours"},
+  {es:"el taller",en:"workshop / studio",cat:"objects",src:"yours"},
+  {es:"el acordeón",en:"accordion",cat:"objects",src:"yours"},
+  {es:"las semillas",en:"seeds",cat:"objects",src:"yours"},
+  {es:"las cenizas",en:"ashes / cinders",cat:"objects",src:"yours"},
+  {es:"el ojal",en:"buttonhole",cat:"objects",src:"yours"},
+  {es:"las mangas",en:"sleeves",cat:"objects",src:"yours"},
+  {es:"los puños",en:"cuffs / fists",cat:"objects",src:"yours"},
+  {es:"la golilla",en:"ruff collar / neck ruff",cat:"objects",src:"yours"},
+  {es:"la lana",en:"wool",cat:"objects",src:"yours"},
+  {es:"las hebras",en:"threads / strands / fibers",cat:"objects",src:"yours"},
+  {es:"el terciopelo",en:"velvet",cat:"objects",src:"yours"},
+  {es:"el canotier",en:"straw boater hat",cat:"objects",src:"yours"},
+  {es:"el molino de maíz",en:"corn mill",cat:"objects",src:"yours"},
+  // YOUR WORDS - nature
+  {es:"el páramo",en:"bleak moorland / cold barren plain",cat:"nature",src:"yours"},
+  {es:"la niebla",en:"fog / mist",cat:"nature",src:"yours"},
+  {es:"la culebra",en:"snake / serpent",cat:"nature",src:"yours"},
+  {es:"los nubarrones",en:"storm clouds / dark clouds",cat:"nature",src:"yours"},
+  {es:"las polillas",en:"moths",cat:"nature",src:"yours"},
+  {es:"la chinche",en:"bedbug / thumbtack",cat:"nature",src:"yours"},
+  {es:"la sarna",en:"scabies / mange",cat:"nature",src:"yours"},
+  {es:"las begonias",en:"begonias (flowering plant)",cat:"nature",src:"yours"},
+  {es:"la cal de paredes",en:"wall lime / whitewash",cat:"nature",src:"yours"},
+  // YOUR WORDS - emotions
+  {es:"el desaliento",en:"discouragement / despondency",cat:"emotions",src:"yours"},
+  {es:"la soberbia",en:"pride / arrogance / haughtiness",cat:"emotions",src:"yours"},
+  {es:"el estremecimiento",en:"shudder / shiver / tremor",cat:"emotions",src:"yours"},
+  {es:"el aturdimiento",en:"daze / bewilderment / confusion",cat:"emotions",src:"yours"},
+  {es:"la ociosidad",en:"idleness / laziness",cat:"emotions",src:"yours"},
+  {es:"la expiación",en:"atonement / expiation",cat:"emotions",src:"yours"},
+  {es:"la picardía",en:"mischief / cunning / slyness",cat:"emotions",src:"yours"},
+  {es:"la hiel",en:"bile / bitterness / gall",cat:"emotions",src:"yours"},
+  // YOUR WORDS - literary
+  {es:"fúnebre",en:"funereal / mournful / gloomy",cat:"literary",src:"yours"},
+  {es:"escuálida",en:"gaunt / squalid / emaciated",cat:"literary",src:"yours"},
+  {es:"empecinada",en:"stubborn / pig-headed / relentless",cat:"literary",src:"yours"},
+  {es:"reventada",en:"burst / exhausted / worn out",cat:"literary",src:"yours"},
+  {es:"escamoteado",en:"swiped / concealed / whisked away",cat:"literary",src:"yours"},
+  {es:"estremecido",en:"shaken / trembling / shuddering",cat:"literary",src:"yours"},
+  {es:"perentorios",en:"urgent / peremptory / pressing",cat:"literary",src:"yours"},
+  {es:"color de plata antigua",en:"color of old silver / tarnished silver hue",cat:"literary",src:"yours"},
+  {es:"carcomida",en:"eaten away / worm-eaten / rotted",cat:"literary",src:"yours"},
+  {es:"entorpecida",en:"sluggish / numbed / impeded",cat:"literary",src:"yours"},
+  {es:"ribeteado",en:"edged / trimmed / bordered",cat:"literary",src:"yours"},
+  {es:"tejía su mortaja",en:"she was weaving her own shroud",cat:"literary",src:"yours"},
+  {es:"bordar el sudario",en:"to embroider the burial cloth",cat:"literary",src:"yours"},
+  {es:"carcomida por la sarna",en:"eaten away by mange / scourge",cat:"literary",src:"yours"},
+  {es:"penumbra de las lunetas",en:"dim light / shadow of the theater seats",cat:"literary",src:"yours"},
+  {es:"regueros de pistas",en:"trails of clues / streams of hints",cat:"literary",src:"yours"},
+  // YOUR WORDS - misc
+  {es:"el tataranieto",en:"great-great-grandchild",cat:"misc",src:"yours"},
+  {es:"el cuatrero",en:"cattle rustler / horse thief",cat:"misc",src:"yours"},
+  {es:"la estirpe",en:"lineage / ancestry / bloodline",cat:"misc",src:"yours"},
+  {es:"la cetrería",en:"falconry",cat:"misc",src:"yours"},
+  {es:"sufragar",en:"to fund / to defray / to vote",cat:"misc",src:"yours"},
+  {es:"soltar",en:"to release / to let go / to loosen",cat:"misc",src:"yours"},
+  {es:"vislumbrar",en:"to glimpse / to make out faintly",cat:"misc",src:"yours"},
+  {es:"despuntar",en:"to stand out / to sprout / to dawn",cat:"misc",src:"yours"},
+  {es:"rematar",en:"to finish off / to complete / to auction",cat:"misc",src:"yours"},
+  {es:"atropellar",en:"to run over / to trample / to bully",cat:"misc",src:"yours"},
+  {es:"advertir",en:"to warn / to notice / to advise",cat:"misc",src:"yours"},
+  {es:"escaldar",en:"to scald / to burn with hot liquid",cat:"misc",src:"yours"},
+  {es:"complacer",en:"to please / to satisfy",cat:"misc",src:"yours"},
+  {es:"refunfuñar",en:"to grumble / to mutter / to grouse",cat:"misc",src:"yours"},
+  {es:"oscurecer",en:"to darken / to grow dark / to obscure",cat:"misc",src:"yours"},
+  {es:"bastar",en:"to be enough / to suffice",cat:"misc",src:"yours"},
+  {es:"alborotar",en:"to stir up / to agitate / to cause a commotion",cat:"misc",src:"yours"},
+  {es:"pariendo",en:"giving birth / in labor",cat:"misc",src:"yours"},
+  {es:"apuntando",en:"pointing / aiming / noting down",cat:"misc",src:"yours"},
+  {es:"los aldabonazos",en:"loud knocks / heavy door-knocker blows",cat:"misc",src:"yours"},
+  {es:"el zarpazo",en:"swipe / claw strike / slash",cat:"misc",src:"yours"},
+  {es:"el jubileo",en:"jubilee / celebration / indulgence",cat:"misc",src:"yours"},
+  {es:"el litoral",en:"coastline / littoral / shoreline",cat:"misc",src:"yours"},
+  {es:"el porvenir",en:"future / what lies ahead",cat:"misc",src:"yours"},
+  {es:"el lecho",en:"bed / riverbed / layer",cat:"misc",src:"yours"},
+  {es:"los panegíricos",en:"panegyrics / eulogies / glowing tributes",cat:"misc",src:"yours"},
+  {es:"la cucaña",en:"greasy pole / something gotten too easily",cat:"misc",src:"yours"},
+  {es:"el trastorno",en:"disorder / disturbance / upset",cat:"misc",src:"yours"},
+  {es:"las parrandas",en:"parties / revelry / merrymaking",cat:"misc",src:"yours"},
+  {es:"el aposento",en:"room / chamber / lodging",cat:"misc",src:"yours"},
+  {es:"las tinieblas",en:"darkness / shadows / gloom",cat:"misc",src:"yours"},
+  {es:"el resplandor",en:"glow / radiance / brightness",cat:"misc",src:"yours"},
+  {es:"la penumbra",en:"dim light / half-shadow",cat:"misc",src:"yours"},
+  {es:"el menestral",en:"craftsman / artisan / tradesman",cat:"misc",src:"yours"},
+  {es:"las escasas treguas",en:"scarce truces / few reprieves",cat:"misc",src:"yours"},
+  {es:"ojalá",en:"hopefully / I wish / God willing",cat:"misc",src:"yours"},
+  {es:"apenas",en:"barely / scarcely / just",cat:"misc",src:"yours"},
+  {es:"el borboritante",en:"gurgling / bubbling sound",cat:"misc",src:"yours"},
+  {es:"la caridad",en:"charity / compassion",cat:"misc",src:"yours"},
+  {es:"las magas",en:"sorceresses / female magicians / wise women",cat:"misc",src:"yours"},
+  {es:"sembrar el pánico",en:"to spread / sow panic",cat:"misc",src:"yours"},
+  {es:"gallos de pelea",en:"fighting roosters / cockfighting birds",cat:"misc",src:"yours"},
+  {es:"la venérea",en:"venereal (disease)",cat:"misc",src:"yours"},
+  // NEW WORDS
+  {es:"acuartelada",en:"confined to barracks / quartered / garrisoned",cat:"misc",src:"yours"},
+  {es:"alado",en:"winged / having wings / swift as if winged",cat:"literary",src:"yours"},
+  {es:"alacranes",en:"scorpions",cat:"nature",src:"yours"},
+  {es:"barloventeando",en:"tacking / sailing into the wind / beating to windward",cat:"misc",src:"yours"},
+  {es:"bendito sea Dios",en:"blessed be God / thank God / God be praised",cat:"misc",src:"yours"},
+  {es:"bocarriba",en:"face up / on one's back / lying upward",cat:"misc",src:"yours"},
+  {es:"catre",en:"cot / camp bed / small bed",cat:"objects",src:"yours"},
+  {es:"charcos",en:"puddles / pools of water / muddy pools",cat:"nature",src:"yours"},
+  {es:"comadrona",en:"midwife",cat:"misc",src:"yours"},
+  {es:"consagradas",en:"consecrated / devoted / dedicated / hallowed",cat:"literary",src:"yours"},
+  {es:"culatas",en:"rifle butts / gun stocks / cylinder heads",cat:"objects",src:"yours"},
+  {es:"desafueros",en:"outrages / abuses / acts of lawlessness",cat:"misc",src:"yours"},
+  {es:"encariñarlos",en:"to grow fond of them / to become attached to them",cat:"misc",src:"yours"},
+  {es:"engendrado",en:"begotten / conceived / engendered / spawned",cat:"literary",src:"yours"},
+  {es:"escampe",en:"a break in the rain / clearing up / dry spell",cat:"nature",src:"yours"},
+  {es:"espantar",en:"to frighten / to scare away / to shoo away",cat:"misc",src:"yours"},
+  {es:"fecundidad",en:"fertility / fecundity / fruitfulness",cat:"misc",src:"yours"},
+  {es:"fugarse",en:"to flee / to escape / to run away",cat:"misc",src:"yours"},
+  {es:"gozar",en:"to enjoy / to take pleasure in / to relish",cat:"misc",src:"yours"},
+  {es:"granero",en:"granary / grain store / barn",cat:"objects",src:"yours"},
+  {es:"hallazgo",en:"discovery / find / finding",cat:"misc",src:"yours"},
+  {es:"herida",en:"wound / injury / cut",cat:"body",src:"yours"},
+  {es:"hormigas",en:"ants",cat:"nature",src:"yours"},
+  {es:"hundió en el sopor",en:"sank into a stupor / plunged into drowsiness",cat:"literary",src:"yours"},
+  {es:"intromisión",en:"intrusion / interference / meddling",cat:"misc",src:"yours"},
+  {es:"letrinas",en:"latrines / outhouses / pit toilets",cat:"objects",src:"yours"},
+  {es:"naufragios",en:"shipwrecks / castaways / disasters at sea",cat:"misc",src:"yours"},
+  {es:"nidos de esparto en los almendros",en:"esparto grass nests in the almond trees",cat:"literary",src:"yours"},
+  {es:"nuca y tobillos",en:"nape of the neck and ankles",cat:"body",src:"yours"},
+  {es:"pedazo de lienzo encerado",en:"piece of waxed cloth / strip of oilcloth",cat:"objects",src:"yours"},
+  {es:"pergamino",en:"parchment / manuscript / scroll",cat:"objects",src:"yours"},
+  {es:"potreros",en:"pastures / grazing fields / paddocks",cat:"nature",src:"yours"},
+  {es:"prevenir",en:"to prevent / to warn / to prepare / to anticipate",cat:"misc",src:"yours"},
+  {es:"pudibundez",en:"prudishness / excessive modesty / priggishness",cat:"emotions",src:"yours"},
+  {es:"racimadas",en:"bunched / clustered / gathered in clusters",cat:"literary",src:"yours"},
+  {es:"rameras",en:"prostitutes / harlots / whores",cat:"misc",src:"yours"},
+  {es:"refractaria",en:"resistant / refractory / opposed / unresponsive",cat:"literary",src:"yours"},
+  {es:"sigilosa",en:"stealthy / silent / secretive",cat:"literary",src:"yours"},
+  {es:"veleidades",en:"whims / fancies / fickleness / fleeting desires",cat:"emotions",src:"yours"},
+  {es:"jugando a los naufragios con los niños",en:"playing shipwrecks / castaways with the kids",cat:"literary",src:"yours"},
+
+  // ── LA CIUDAD Y LOS PERROS — hardest words ──
+  // MILITARY / SCHOOL
+  {es:"el cadete",en:"cadet / military school student",cat:"misc",src:"ciudad"},
+  {es:"el pelado",en:"new recruit / freshman / shaved-head cadet",cat:"misc",src:"ciudad"},
+  {es:"el perro",en:"dog / derogatory term for freshman cadet",cat:"misc",src:"ciudad"},
+  {es:"el círculo",en:"the Circle / secret gang within the school",cat:"misc",src:"ciudad"},
+  {es:"la consigna",en:"standing order / watchword / password",cat:"misc",src:"ciudad"},
+  {es:"el calabozo",en:"dungeon / military jail / lockup cell",cat:"misc",src:"ciudad"},
+  {es:"el plantón",en:"punishment detail / standing guard as punishment",cat:"misc",src:"ciudad"},
+  {es:"la guardia",en:"guard duty / watch shift",cat:"misc",src:"ciudad"},
+  {es:"el rancho",en:"mess hall food / military rations / grub",cat:"misc",src:"ciudad"},
+  {es:"la cuadra",en:"barracks room / dormitory block",cat:"misc",src:"ciudad"},
+  {es:"el suboficial",en:"non-commissioned officer / NCO",cat:"misc",src:"ciudad"},
+  {es:"el teniente",en:"lieutenant",cat:"misc",src:"ciudad"},
+  {es:"el alférez",en:"second lieutenant / ensign",cat:"misc",src:"ciudad"},
+  {es:"la brigada",en:"brigade / rank of senior NCO",cat:"misc",src:"ciudad"},
+  {es:"el reglamento",en:"regulations / military rulebook",cat:"misc",src:"ciudad"},
+  {es:"franquear",en:"to cross / to pass through / to grant passage",cat:"misc",src:"ciudad"},
+  {es:"la formación",en:"formation / military lineup / assembly",cat:"misc",src:"ciudad"},
+  {es:"el toque de diana",en:"reveille / bugle call at dawn",cat:"misc",src:"ciudad"},
+  {es:"el toque de queda",en:"curfew / lights-out bugle call",cat:"misc",src:"ciudad"},
+  {es:"el simulacro",en:"drill / exercise / mock battle",cat:"misc",src:"ciudad"},
+  {es:"la venia",en:"military salute / bow of respect",cat:"misc",src:"ciudad"},
+  {es:"el parte",en:"military report / incident report",cat:"misc",src:"ciudad"},
+  {es:"acuartelamiento",en:"confinement to barracks / quartering of troops",cat:"misc",src:"ciudad"},
+  {es:"el pabellón",en:"pavilion / barrack block / flag",cat:"misc",src:"ciudad"},
+  {es:"la posta",en:"guard post / sentry position",cat:"misc",src:"ciudad"},
+  {es:"el centinela",en:"sentry / sentinel / guard on watch",cat:"misc",src:"ciudad"},
+  {es:"el parapeto",en:"parapet / low wall / barrier",cat:"objects",src:"ciudad"},
+  {es:"la alambrada",en:"barbed wire / wire fence",cat:"objects",src:"ciudad"},
+  {es:"la garita",en:"sentry box / guard booth / watch tower",cat:"objects",src:"ciudad"},
+  {es:"el foso",en:"moat / ditch / pit",cat:"objects",src:"ciudad"},
+  {es:"el patio de armas",en:"parade ground / drill square",cat:"objects",src:"ciudad"},
+  // PERUVIAN SLANG
+  {es:"la causa",en:"buddy / mate / close friend (Peruvian slang)",cat:"misc",src:"ciudad"},
+  {es:"el pata",en:"guy / dude / mate (Peruvian slang)",cat:"misc",src:"ciudad"},
+  {es:"jato",en:"home / house (Lima street slang)",cat:"misc",src:"ciudad"},
+  {es:"al toque",en:"right away / immediately (Peruvian slang)",cat:"misc",src:"ciudad"},
+  {es:"bacán",en:"cool / great / awesome (Peruvian slang)",cat:"misc",src:"ciudad"},
+  {es:"la chibola",en:"girl / young woman (Lima slang)",cat:"misc",src:"ciudad"},
+  {es:"el misio",en:"broke / penniless (Peruvian slang)",cat:"misc",src:"ciudad"},
+  {es:"el canchero",en:"smooth operator / streetwise person (Peruvian slang)",cat:"misc",src:"ciudad"},
+  {es:"cachaco",en:"soldier / cop / police officer (Lima slang)",cat:"misc",src:"ciudad"},
+  {es:"el serrano",en:"person from the highlands / Andean — often derogatory (Peruvian slang)",cat:"misc",src:"ciudad"},
+  {es:"el cholo",en:"person of mixed indigenous descent — complex term (Peruvian slang)",cat:"misc",src:"ciudad"},
+  {es:"el limeño",en:"person from Lima (Peruvian term)",cat:"misc",src:"ciudad"},
+  {es:"la chamba",en:"job / work / hustle (Latin American slang)",cat:"misc",src:"ciudad"},
+  {es:"la plata",en:"money / cash (Latin American slang)",cat:"misc",src:"ciudad"},
+  {es:"el ñato",en:"flat-nosed / snub-nosed — common nickname (Peruvian slang)",cat:"misc",src:"ciudad"},
+  // VIOLENCE / AGGRESSION
+  {es:"el puñetazo",en:"punch / fist blow",cat:"misc",src:"ciudad"},
+  {es:"la paliza",en:"beating / thrashing / hiding",cat:"misc",src:"ciudad"},
+  {es:"apalear",en:"to beat / to thrash / to club",cat:"misc",src:"ciudad"},
+  {es:"el navajazo",en:"knife slash / stab wound",cat:"misc",src:"ciudad"},
+  {es:"la navaja",en:"switchblade / flick knife / razor",cat:"misc",src:"ciudad"},
+  {es:"acuchillar",en:"to knife / to stab / to slash with a blade",cat:"misc",src:"ciudad"},
+  {es:"el balazo",en:"gunshot / bullet wound",cat:"misc",src:"ciudad"},
+  {es:"el disparo",en:"shot / gunfire / discharge of a weapon",cat:"misc",src:"ciudad"},
+  {es:"apretar el gatillo",en:"to pull the trigger",cat:"misc",src:"ciudad"},
+  {es:"el gatillo",en:"trigger (of a gun)",cat:"objects",src:"ciudad"},
+  {es:"forcejear",en:"to struggle / to wrestle / to scuffle",cat:"misc",src:"ciudad"},
+  {es:"el forcejeo",en:"struggle / scuffle / tussle",cat:"misc",src:"ciudad"},
+  {es:"la riña",en:"fight / brawl / quarrel",cat:"misc",src:"ciudad"},
+  {es:"el matón",en:"bully / thug / hitman",cat:"misc",src:"ciudad"},
+  {es:"acorralar",en:"to corner / to surround / to trap",cat:"misc",src:"ciudad"},
+  {es:"aporreal",en:"to beat repeatedly / to pound / to pummel",cat:"misc",src:"ciudad"},
+  {es:"la trifulca",en:"brawl / ruckus / free-for-all",cat:"misc",src:"ciudad"},
+  {es:"el altercado",en:"altercation / argument / clash",cat:"misc",src:"ciudad"},
+  // EMOTIONS / PSYCHOLOGY
+  {es:"el rencor",en:"resentment / grudge / bitterness",cat:"emotions",src:"ciudad"},
+  {es:"el desprecio",en:"contempt / scorn / disdain",cat:"emotions",src:"ciudad"},
+  {es:"la humillación",en:"humiliation / degradation",cat:"emotions",src:"ciudad"},
+  {es:"el resentimiento",en:"resentment / bitterness",cat:"emotions",src:"ciudad"},
+  {es:"la angustia",en:"anguish / distress / anxiety",cat:"emotions",src:"ciudad"},
+  {es:"el remordimiento",en:"remorse / guilt / regret",cat:"emotions",src:"ciudad"},
+  {es:"la cobardía",en:"cowardice",cat:"emotions",src:"ciudad"},
+  {es:"la valentía",en:"bravery / courage / boldness",cat:"emotions",src:"ciudad"},
+  {es:"el desamparo",en:"helplessness / abandonment / destitution",cat:"emotions",src:"ciudad"},
+  {es:"el despecho",en:"spite / resentment / scorn",cat:"emotions",src:"ciudad"},
+  {es:"el hastío",en:"weariness / boredom / disgust",cat:"emotions",src:"ciudad"},
+  {es:"el abatimiento",en:"dejection / despondency / low spirits",cat:"emotions",src:"ciudad"},
+  {es:"la zozobra",en:"anxiety / unease / dread",cat:"emotions",src:"ciudad"},
+  {es:"el pudor",en:"modesty / shame / inhibition",cat:"emotions",src:"ciudad"},
+  {es:"la prepotencia",en:"arrogance / high-handedness / abuse of power",cat:"emotions",src:"ciudad"},
+  {es:"la envidia",en:"envy / jealousy",cat:"emotions",src:"ciudad"},
+  {es:"la vergüenza ajena",en:"vicarious embarrassment / shame felt for another",cat:"emotions",src:"ciudad"},
+
+  // SOCIAL / CLASS
+  {es:"el suburbio",en:"suburb / slum / outskirts",cat:"misc",src:"ciudad"},
+  {es:"el tugurio",en:"slum / hovel / dive",cat:"misc",src:"ciudad"},
+  {es:"la choza",en:"shack / hut / shanty",cat:"misc",src:"ciudad"},
+  {es:"el arrabal",en:"slum district / poor outskirts of a city",cat:"misc",src:"ciudad"},
+  {es:"el advenedizo",en:"upstart / parvenu / social climber",cat:"misc",src:"ciudad"},
+  {es:"la alcurnia",en:"noble lineage / distinguished ancestry",cat:"misc",src:"ciudad"},
+  {es:"el abolengo",en:"ancestry / pedigree / noble descent",cat:"misc",src:"ciudad"},
+  {es:"el gamberro",en:"hooligan / lout / troublemaker",cat:"misc",src:"ciudad"},
+  {es:"la pandilla",en:"gang / group / crew",cat:"misc",src:"ciudad"},
+  {es:"el compadrazgo",en:"cronyism / network of favours / old boy network",cat:"misc",src:"ciudad"},
+  {es:"la jerarquía",en:"hierarchy / chain of command",cat:"misc",src:"ciudad"},
+  {es:"el marginal",en:"marginalized person / outcast / fringe dweller",cat:"misc",src:"ciudad"},
+  {es:"el abuso de poder",en:"abuse of power",cat:"misc",src:"ciudad"},
+  {es:"la corrupción",en:"corruption / bribery / moral decay",cat:"misc",src:"ciudad"},
+  {es:"el enchufado",en:"someone who got ahead through connections",cat:"misc",src:"ciudad"},
+  // BODY / PHYSICAL
+  {es:"el sudor",en:"sweat / perspiration",cat:"body",src:"ciudad"},
+  {es:"la mandíbula",en:"jaw / mandible",cat:"body",src:"ciudad"},
+  {es:"las sienes",en:"temples (sides of the head)",cat:"body",src:"ciudad"},
+  {es:"las costillas",en:"ribs",cat:"body",src:"ciudad"},
+  {es:"el muslo",en:"thigh",cat:"body",src:"ciudad"},
+  {es:"la pantorrilla",en:"calf (of the leg)",cat:"body",src:"ciudad"},
+  {es:"el entrecejo",en:"space between the eyebrows / furrowed brow",cat:"body",src:"ciudad"},
+  {es:"los pómulos",en:"cheekbones",cat:"body",src:"ciudad"},
+  {es:"las venas",en:"veins",cat:"body",src:"ciudad"},
+  {es:"el flequillo",en:"fringe / bangs (hair)",cat:"body",src:"ciudad"},
+  {es:"los tendones",en:"tendons / sinews",cat:"body",src:"ciudad"},
+  // NATURE / LIMA SETTING
+  {es:"el malecón",en:"seafront promenade / coastal road / boardwalk",cat:"nature",src:"ciudad"},
+  {es:"la garúa",en:"Lima's coastal drizzle / sea mist / fine rain",cat:"nature",src:"ciudad"},
+  {es:"el arenal",en:"sandy wasteland / sand flat / dune field",cat:"nature",src:"ciudad"},
+  {es:"el acantilado",en:"cliff / sea cliff / precipice",cat:"nature",src:"ciudad"},
+  {es:"la bruma",en:"haze / mist / sea fog",cat:"nature",src:"ciudad"},
+  {es:"el pedregal",en:"rocky ground / stony terrain",cat:"nature",src:"ciudad"},
+  {es:"el matorral",en:"scrubland / thicket / undergrowth",cat:"nature",src:"ciudad"},
+  {es:"el barranco",en:"ravine / gully / steep bank",cat:"nature",src:"ciudad"},
+  {es:"la llovizna",en:"drizzle / light rain / sprinkle",cat:"nature",src:"ciudad"},
+  {es:"el barro",en:"mud / clay / mire",cat:"nature",src:"ciudad"},
+  {es:"la neblina",en:"mist / haze / light fog",cat:"nature",src:"ciudad"},
+  {es:"el pantano",en:"swamp / marsh / bog",cat:"nature",src:"ciudad"},
+  {es:"el cerro",en:"hill / highland / peak",cat:"nature",src:"ciudad"},
+  {es:"la quebrada",en:"ravine / gully / dry streambed",cat:"nature",src:"ciudad"},
+  // LITERARY / DESCRIPTIVE
+  {es:"lacónico",en:"laconic / terse / of few words",cat:"literary",src:"ciudad"},
+  {es:"huraño",en:"unsociable / surly / withdrawn",cat:"literary",src:"ciudad"},
+  {es:"taciturno",en:"taciturn / silent / morose",cat:"literary",src:"ciudad"},
+  {es:"altanero",en:"arrogant / haughty / disdainful",cat:"literary",src:"ciudad"},
+  {es:"hosco",en:"sullen / grim / unfriendly",cat:"literary",src:"ciudad"},
+  {es:"escurridizo",en:"slippery / elusive / hard to pin down",cat:"literary",src:"ciudad"},
+  {es:"ladino",en:"cunning / sly / crafty",cat:"literary",src:"ciudad"},
+  {es:"taimado",en:"sly / devious / shifty",cat:"literary",src:"ciudad"},
+  {es:"avieso",en:"twisted / malicious / wicked",cat:"literary",src:"ciudad"},
+  {es:"solapado",en:"underhand / sneaky / two-faced",cat:"literary",src:"ciudad"},
+  {es:"fornido",en:"stocky / well-built / burly",cat:"literary",src:"ciudad"},
+  {es:"esmirriado",en:"scrawny / puny / undersized",cat:"literary",src:"ciudad"},
+  {es:"enclenque",en:"weak / feeble / sickly",cat:"literary",src:"ciudad"},
+  {es:"desgarbado",en:"ungainly / awkward / gangling",cat:"literary",src:"ciudad"},
+  {es:"apocado",en:"timid / meek / lacking confidence",cat:"literary",src:"ciudad"},
+  {es:"receloso",en:"suspicious / wary / distrustful",cat:"literary",src:"ciudad"},
+  {es:"esquivo",en:"evasive / aloof / standoffish",cat:"literary",src:"ciudad"},
+  {es:"torvo",en:"grim / fierce / menacing (look)",cat:"literary",src:"ciudad"},
+  {es:"adusto",en:"austere / stern / severe",cat:"literary",src:"ciudad"},
+  {es:"hierático",en:"hieratic / rigid / expressionless",cat:"literary",src:"ciudad"},
+  {es:"impávido",en:"fearless / impassive / undaunted",cat:"literary",src:"ciudad"},
+  {es:"impertérrito",en:"unperturbed / undaunted / unflinching",cat:"literary",src:"ciudad"},
+  {es:"aciago",en:"ill-fated / ominous / fateful",cat:"literary",src:"ciudad"},
+  {es:"turbio",en:"murky / troubled / shady",cat:"literary",src:"ciudad"},
+  {es:"sombrío",en:"dark / gloomy / sombre",cat:"literary",src:"ciudad"},
+  {es:"lóbrego",en:"dark / gloomy / dismal",cat:"literary",src:"ciudad"},
+  {es:"lúgubre",en:"lugubrious / mournful / gloomy",cat:"literary",src:"ciudad"},
+  {es:"sórdido",en:"sordid / squalid / seedy",cat:"literary",src:"ciudad"},
+  {es:"mezquino",en:"mean / petty / miserly",cat:"literary",src:"ciudad"},
+  {es:"ruin",en:"vile / despicable / base",cat:"literary",src:"ciudad"},
+  {es:"el monólogo interior",en:"interior monologue / stream of consciousness",cat:"literary",src:"ciudad"},
+  {es:"el contrapunto",en:"counterpoint / contrasting narrative thread",cat:"literary",src:"ciudad"},
+  {es:"entreverado",en:"interwoven / interspersed / mixed together",cat:"literary",src:"ciudad"},
+  {es:"yuxtapuesto",en:"juxtaposed / placed side by side for contrast",cat:"literary",src:"ciudad"},
+  {es:"el desenlace",en:"denouement / outcome / resolution",cat:"literary",src:"ciudad"},
+  {es:"ambiguo",en:"ambiguous / unclear / open to interpretation",cat:"literary",src:"ciudad"},
+  {es:"la elipsis",en:"ellipsis / narrative jump / omission",cat:"literary",src:"ciudad"},
+  // ACTIONS / VERBS
+  {es:"acechar",en:"to lurk / to spy on / to lie in wait",cat:"misc",src:"ciudad"},
+  {es:"escudriñar",en:"to scrutinize / to examine closely / to peer into",cat:"misc",src:"ciudad"},
+  {es:"escabullirse",en:"to slip away / to sneak off / to wriggle free",cat:"misc",src:"ciudad"},
+  {es:"merodear",en:"to prowl / to lurk / to hang around",cat:"misc",src:"ciudad"},
+  {es:"rondar",en:"to prowl around / to patrol / to hover near",cat:"misc",src:"ciudad"},
+  {es:"entrometerse",en:"to meddle / to interfere / to butt in",cat:"misc",src:"ciudad"},
+  {es:"cuchichear",en:"to whisper / to murmur secretly",cat:"misc",src:"ciudad"},
+  {es:"murmurar",en:"to murmur / to mutter / to gossip",cat:"misc",src:"ciudad"},
+  {es:"mascullar",en:"to mumble / to mutter under one's breath",cat:"misc",src:"ciudad"},
+  {es:"balbucear",en:"to stammer / to babble / to mumble",cat:"misc",src:"ciudad"},
+  {es:"tartamudear",en:"to stutter / to stammer",cat:"misc",src:"ciudad"},
+  {es:"jadear",en:"to pant / to gasp / to wheeze",cat:"misc",src:"ciudad"},
+  {es:"trastabillar",en:"to stumble / to stagger / to trip",cat:"misc",src:"ciudad"},
+  {es:"zarandear",en:"to shake / to jostle / to push around",cat:"misc",src:"ciudad"},
+  {es:"manotear",en:"to gesticulate / to wave one's hands / to flail",cat:"misc",src:"ciudad"},
+  {es:"revolcarse",en:"to roll around / to wallow / to writhe",cat:"misc",src:"ciudad"},
+  {es:"arrastrarse",en:"to crawl / to drag oneself / to grovel",cat:"misc",src:"ciudad"},
+  {es:"agazaparse",en:"to crouch / to huddle / to lie low",cat:"misc",src:"ciudad"},
+  {es:"escurrirse",en:"to slip away / to slide / to ooze out",cat:"misc",src:"ciudad"},
+  {es:"envalentonarse",en:"to become emboldened / to pluck up courage",cat:"misc",src:"ciudad"},
+  {es:"amedrentar",en:"to intimidate / to frighten / to cow",cat:"misc",src:"ciudad"},
+  {es:"amilanarse",en:"to be daunted / to lose nerve / to be intimidated",cat:"misc",src:"ciudad"},
+  {es:"desafiar",en:"to defy / to challenge / to dare",cat:"misc",src:"ciudad"},
+  {es:"someterse",en:"to submit / to surrender / to give in",cat:"misc",src:"ciudad"},
+  {es:"humillarse",en:"to humble oneself / to grovel / to be humiliated",cat:"misc",src:"ciudad"},
+  {es:"vengarse",en:"to take revenge / to get even / to avenge oneself",cat:"misc",src:"ciudad"},
+  {es:"delatar",en:"to inform on / to betray / to denounce",cat:"misc",src:"ciudad"},
+  {es:"rezongar",en:"to grumble / to grouse / to mutter complaints",cat:"misc",src:"ciudad"},
+  {es:"farfullar",en:"to jabber / to splutter / to gabble",cat:"misc",src:"ciudad"},
+  {es:"despotricar",en:"to rant / to rail against / to sound off",cat:"misc",src:"ciudad"},
+  {es:"vociferar",en:"to shout / to bellow / to vociferate",cat:"misc",src:"ciudad"},
+  {es:"increpar",en:"to rebuke / to upbraid / to confront angrily",cat:"misc",src:"ciudad"},
+  {es:"injuriar",en:"to insult / to abuse verbally / to slander",cat:"misc",src:"ciudad"},
+  {es:"espetar",en:"to blurt out / to snap at / to spit out (words)",cat:"misc",src:"ciudad"},
+  {es:"reprochar",en:"to reproach / to blame / to rebuke",cat:"misc",src:"ciudad"},
+  // OBJECTS
+  {es:"la litera",en:"bunk bed / berth / cot",cat:"objects",src:"ciudad"},
+  {es:"la cantimplora",en:"canteen / water flask / field bottle",cat:"objects",src:"ciudad"},
+  {es:"el fusil",en:"rifle / musket / firearm",cat:"objects",src:"ciudad"},
+  {es:"la bayoneta",en:"bayonet",cat:"objects",src:"ciudad"},
+  {es:"el kepis",en:"military cap / kepi",cat:"objects",src:"ciudad"},
+  {es:"la cartuchera",en:"cartridge belt / ammunition pouch",cat:"objects",src:"ciudad"},
+  {es:"la linterna",en:"torch / flashlight / lantern",cat:"objects",src:"ciudad"},
+  {es:"la cantina",en:"canteen / mess / military bar",cat:"objects",src:"ciudad"},
+  {es:"la trinchera",en:"trench / ditch / raincoat (trench coat)",cat:"objects",src:"ciudad"},
+  {es:"el tablón de anuncios",en:"notice board / bulletin board",cat:"objects",src:"ciudad"},
+  // ABSTRACT / THEME
+  {es:"la traición",en:"betrayal / treason / treachery",cat:"misc",src:"ciudad"},
+  {es:"el código de silencio",en:"code of silence / omertà",cat:"misc",src:"ciudad"},
+  {es:"la lealtad",en:"loyalty / faithfulness / allegiance",cat:"misc",src:"ciudad"},
+  {es:"la delación",en:"denunciation / informing / betrayal",cat:"misc",src:"ciudad"},
+  {es:"el chivato",en:"informer / snitch / grass",cat:"misc",src:"ciudad"},
+  {es:"el soplón",en:"snitch / stool pigeon / informer",cat:"misc",src:"ciudad"},
+  {es:"el encubrimiento",en:"cover-up / concealment / harbouring",cat:"misc",src:"ciudad"},
+  {es:"la impunidad",en:"impunity / exemption from punishment",cat:"misc",src:"ciudad"},
+  {es:"la complicidad",en:"complicity / being an accomplice",cat:"misc",src:"ciudad"},
+  {es:"la masculinidad",en:"masculinity / manhood",cat:"misc",src:"ciudad"},
+  {es:"el rito de iniciación",en:"initiation rite / rite of passage",cat:"misc",src:"ciudad"},
+  {es:"la supervivencia",en:"survival / endurance",cat:"misc",src:"ciudad"},
+  {es:"la brutalidad",en:"brutality / savagery / cruelty",cat:"misc",src:"ciudad"},
+  // EXTRA HARD VOCAB
+  {es:"el esbirro",en:"henchman / lackey / hired thug",cat:"misc",src:"ciudad"},
+  {es:"el lacayo",en:"lackey / footman / yes-man",cat:"misc",src:"ciudad"},
+  {es:"la caterva",en:"rabble / mob / disorderly crowd",cat:"misc",src:"ciudad"},
+  {es:"el fanfarrón",en:"braggart / show-off / blowhard",cat:"misc",src:"ciudad"},
+  {es:"el bravucón",en:"bully / blusterer / tough-talking coward",cat:"misc",src:"ciudad"},
+  {es:"el chismoso",en:"gossip / tattletale / rumour-monger",cat:"misc",src:"ciudad"},
+  {es:"el tramposo",en:"cheat / swindler / fraudster",cat:"misc",src:"ciudad"},
+  {es:"el bellaco",en:"scoundrel / rogue / villain",cat:"misc",src:"ciudad"},
+  {es:"el pícaro",en:"rogue / rascal / picaresque antihero",cat:"misc",src:"ciudad"},
+  {es:"el sinvergüenza",en:"shameless person / scoundrel / rascal",cat:"misc",src:"ciudad"},
+  {es:"el granuja",en:"rogue / rascal / crook",cat:"misc",src:"ciudad"},
+  {es:"el embustero",en:"liar / fibber / deceiver",cat:"misc",src:"ciudad"},
+  {es:"el hipócrita",en:"hypocrite / two-faced person",cat:"misc",src:"ciudad"},
+  {es:"el intrigante",en:"schemer / intriguer / plotter",cat:"misc",src:"ciudad"},
+  {es:"el maleante",en:"criminal / delinquent / wrongdoer",cat:"misc",src:"ciudad"},
+  {es:"el sigilo",en:"stealth / secrecy / silence",cat:"misc",src:"ciudad"},
+  {es:"a hurtadillas",en:"stealthily / on the sly / by stealth",cat:"misc",src:"ciudad"},
+  {es:"a escondidas",en:"secretly / in hiding / on the sly",cat:"misc",src:"ciudad"},
+  {es:"el subterfugio",en:"subterfuge / dodge / ruse",cat:"misc",src:"ciudad"},
+  {es:"la argucia",en:"trick / ruse / clever argument",cat:"misc",src:"ciudad"},
+  {es:"la estratagema",en:"stratagem / ploy / scheme",cat:"misc",src:"ciudad"},
+  {es:"el ardid",en:"ruse / trick / stratagem",cat:"misc",src:"ciudad"},
+  {es:"la celada",en:"ambush / trap / snare",cat:"misc",src:"ciudad"},
+  {es:"la emboscada",en:"ambush / ambuscade / trap",cat:"misc",src:"ciudad"},
+
+  // ── CRÓNICA DE UNA MUERTE ANUNCIADA ──
+  // HONOUR / SOCIAL CODE
+  {es:"el honor mancillado",en:"tarnished honour / dishonoured reputation",cat:"literary",src:"cronica"},
+  {es:"la deshonra",en:"dishonour / disgrace / shame",cat:"emotions",src:"cronica"},
+  {es:"la virginidad",en:"virginity",cat:"misc",src:"cronica"},
+  {es:"el ultraje",en:"outrage / affront / violation",cat:"misc",src:"cronica"},
+  {es:"la afrenta",en:"affront / insult / act of dishonour",cat:"misc",src:"cronica"},
+  {es:"la honra",en:"honour / good name / reputation",cat:"misc",src:"cronica"},
+  {es:"vindicar",en:"to vindicate / to avenge / to reclaim honour",cat:"misc",src:"cronica"},
+  {es:"el agravio",en:"grievance / offence / wrong done to someone",cat:"misc",src:"cronica"},
+  {es:"el escándalo",en:"scandal / public outrage / disgrace",cat:"misc",src:"cronica"},
+  {es:"la deshonra pública",en:"public dishonour / open disgrace",cat:"misc",src:"cronica"},
+  {es:"el pudor",en:"modesty / chastity / sense of shame",cat:"emotions",src:"cronica"},
+  {es:"la decencia",en:"decency / propriety / respectability",cat:"misc",src:"cronica"},
+  {es:"el oprobio",en:"opprobrium / public shame / disgrace",cat:"literary",src:"cronica"},
+  {es:"el estigma",en:"stigma / mark of disgrace",cat:"misc",src:"cronica"},
+  // DEATH / KILLING
+  {es:"el crimen anunciado",en:"the foretold crime / announced murder",cat:"literary",src:"cronica"},
+  {es:"el degüello",en:"throat-cutting / slaughter / killing by blade",cat:"misc",src:"cronica"},
+  {es:"acuchillar",en:"to stab / to slash / to knife",cat:"misc",src:"cronica"},
+  {es:"el cuchillo de matar",en:"killing knife / butcher's knife",cat:"objects",src:"cronica"},
+  {es:"la cuchillada",en:"knife wound / slash / stab",cat:"misc",src:"cronica"},
+  {es:"agonizar",en:"to be dying / to be in agony / to agonize",cat:"misc",src:"cronica"},
+  {es:"la agonía",en:"agony / death throes / dying struggle",cat:"misc",src:"cronica"},
+  {es:"el presagio",en:"omen / portent / foreboding",cat:"literary",src:"cronica"},
+  {es:"el augurio",en:"augury / omen / sign of what's to come",cat:"literary",src:"cronica"},
+  {es:"el fatídico",en:"fateful / ill-omened / ominous",cat:"literary",src:"cronica"},
+  {es:"el velorio",en:"wake / vigil for the dead",cat:"misc",src:"cronica"},
+  {es:"el duelo",en:"duel / mourning / grief",cat:"misc",src:"cronica"},
+  {es:"el cadáver",en:"corpse / dead body",cat:"misc",src:"cronica"},
+  {es:"la autopsia",en:"autopsy / post-mortem examination",cat:"misc",src:"cronica"},
+  {es:"el forense",en:"forensic examiner / coroner",cat:"misc",src:"cronica"},
+  {es:"la necropsia",en:"necropsy / post-mortem / autopsy (Latin American term)",cat:"misc",src:"cronica"},
+  {es:"ensangrentado",en:"bloodied / covered in blood / blood-soaked",cat:"literary",src:"cronica"},
+  {es:"el tajo",en:"deep cut / slash / gash",cat:"misc",src:"cronica"},
+  // COLOMBIAN / COASTAL LIFE
+  {es:"el caserío",en:"hamlet / small settlement / cluster of houses",cat:"nature",src:"cronica"},
+  {es:"el puerto fluvial",en:"river port / inland port",cat:"misc",src:"cronica"},
+  {es:"la madrugada",en:"the small hours / early morning before dawn",cat:"misc",src:"cronica"},
+  {es:"el carnaval",en:"carnival / festival season",cat:"misc",src:"cronica"},
+  {es:"el obispo",en:"bishop",cat:"misc",src:"cronica"},
+  {es:"la procesión",en:"procession / religious parade",cat:"misc",src:"cronica"},
+  {es:"el muelle",en:"dock / pier / wharf",cat:"objects",src:"cronica"},
+  {es:"la marisma",en:"salt marsh / estuary wetland",cat:"nature",src:"cronica"},
+  {es:"el calor sofocante",en:"suffocating heat / stifling heat",cat:"nature",src:"cronica"},
+  {es:"la ciénaga",en:"swamp / marsh / bog (also a place name)",cat:"nature",src:"cronica"},
+  {es:"el guayabo",en:"guava tree / hangover (Colombian slang)",cat:"nature",src:"cronica"},
+  {es:"la hamaca",en:"hammock",cat:"objects",src:"cronica"},
+  {es:"el aguardiente",en:"aguardiente / strong cane liquor / firewater",cat:"misc",src:"cronica"},
+  {es:"la parranda",en:"party / revelry / all-night celebration (Colombian)",cat:"misc",src:"cronica"},
+  {es:"la escopeta",en:"shotgun / rifle",cat:"objects",src:"cronica"},
+  // SOCIAL / CHARACTERS
+  {es:"el alcalde",en:"mayor / local authority head",cat:"misc",src:"cronica"},
+  {es:"el cura párroco",en:"parish priest / local priest",cat:"misc",src:"cronica"},
+  {es:"la comadre",en:"close female friend / godmother / confidante",cat:"misc",src:"cronica"},
+  {es:"el compadre",en:"close male friend / godfather / buddy",cat:"misc",src:"cronica"},
+  {es:"el recién casado",en:"newlywed / recently married man",cat:"misc",src:"cronica"},
+  {es:"la novia",en:"bride / girlfriend / fiancée",cat:"misc",src:"cronica"},
+  {es:"la dote",en:"dowry / bride's portion",cat:"misc",src:"cronica"},
+  {es:"el galán",en:"suitor / gallant / charming man",cat:"misc",src:"cronica"},
+  {es:"el forastero",en:"outsider / stranger / newcomer to town",cat:"misc",src:"cronica"},
+  {es:"el pudiente",en:"wealthy person / man of means",cat:"misc",src:"cronica"},
+  {es:"el árabe",en:"Arab — used loosely in Colombia for Middle Eastern immigrants",cat:"misc",src:"cronica"},
+  // NARRATIVE / STRUCTURE
+  {es:"el narrador testigo",en:"witness narrator / narrator who was present",cat:"literary",src:"cronica"},
+  {es:"la crónica",en:"chronicle / journalistic account / record of events",cat:"literary",src:"cronica"},
+  {es:"el testimonio",en:"testimony / witness account / statement",cat:"literary",src:"cronica"},
+  {es:"reconstruir los hechos",en:"to reconstruct the events / piece together what happened",cat:"literary",src:"cronica"},
+  {es:"la ironía trágica",en:"tragic irony / everyone knows except the victim",cat:"literary",src:"cronica"},
+  {es:"el fatalismo",en:"fatalism / belief that events are inevitable",cat:"literary",src:"cronica"},
+  {es:"la premonición",en:"premonition / foreboding / sense of doom",cat:"literary",src:"cronica"},
+  {es:"el determinismo",en:"determinism / inevitability of outcome",cat:"literary",src:"cronica"},
+  // EMOTIONS / STATES
+  {es:"la resignación",en:"resignation / acceptance of fate",cat:"emotions",src:"cronica"},
+  {es:"el fatalismo resignado",en:"resigned fatalism / passive acceptance of doom",cat:"emotions",src:"cronica"},
+  {es:"el estupor",en:"stupor / stunned state / numbness",cat:"emotions",src:"cronica"},
+  {es:"la incredulidad",en:"disbelief / incredulity",cat:"emotions",src:"cronica"},
+  {es:"la complicidad colectiva",en:"collective complicity / whole town's shared guilt",cat:"emotions",src:"cronica"},
+  {es:"el remordimiento tardío",en:"belated remorse / guilt that comes too late",cat:"emotions",src:"cronica"},
+  {es:"el presentimiento",en:"presentiment / gut feeling / sense of dread",cat:"emotions",src:"cronica"},
+  {es:"atolondrado",en:"dazed / bewildered / scatter-brained",cat:"literary",src:"cronica"},
+  {es:"aturdido",en:"stunned / dazed / in a daze",cat:"literary",src:"cronica"},
+  // HARD VOCABULARY
+  {es:"escudriñar",en:"to scrutinize / to examine closely",cat:"misc",src:"cronica"},
+  {es:"vislumbrar",en:"to glimpse / to make out dimly",cat:"misc",src:"cronica"},
+  {es:"la impunidad",en:"impunity / going unpunished",cat:"misc",src:"cronica"},
+  {es:"el fatum",en:"fate / doom / destiny (Latin-derived literary term)",cat:"literary",src:"cronica"},
+  {es:"inexorable",en:"inexorable / unstoppable / relentless",cat:"literary",src:"cronica"},
+  {es:"el designio",en:"design / plan / fate / divine purpose",cat:"literary",src:"cronica"},
+  {es:"la fatalidad",en:"fatality / fatal destiny / doom",cat:"literary",src:"cronica"},
+  {es:"inevitable",en:"inevitable / unavoidable / inescapable",cat:"literary",src:"cronica"},
+  {es:"premeditado",en:"premeditated / planned in advance",cat:"literary",src:"cronica"},
+  {es:"el acto consumado",en:"the consummated act / the deed already done",cat:"literary",src:"cronica"},
+  {es:"la indolencia",en:"indolence / indifference / moral laziness",cat:"emotions",src:"cronica"},
+  {es:"la indiferencia colectiva",en:"collective indifference / nobody stopping what everyone knows",cat:"emotions",src:"cronica"},
+  {es:"el machismo",en:"machismo / aggressive masculine pride",cat:"misc",src:"cronica"},
+  {es:"el código de honor",en:"code of honour / unwritten rules of masculine pride",cat:"misc",src:"cronica"},
+  {es:"la venganza de sangre",en:"blood vengeance / honour killing",cat:"misc",src:"cronica"},
+  {es:"el crimen pasional",en:"crime of passion",cat:"misc",src:"cronica"},
+  {es:"la expiación",en:"atonement / expiation / making amends",cat:"emotions",src:"cronica"},
+  {es:"absolver",en:"to absolve / to acquit / to clear of blame",cat:"misc",src:"cronica"},
+  {es:"la absolución",en:"absolution / acquittal / clearance of guilt",cat:"misc",src:"cronica"},
+  {es:"la condena",en:"condemnation / sentence / conviction",cat:"misc",src:"cronica"},
+];
+
+// ── INLINE SAVE DATA (progress baked into this file) ──
+// This block is rewritten each time you hit "Save"
+const SAVE_DATA = {
+  customWords: [],
+  sessions: [],
+  filters: { cat:'all', dir:'es-en', src:'all' },
+  archived: []
+};
+
+// ── STATE ──
+let customWords = JSON.parse(JSON.stringify(SAVE_DATA.customWords));
+let sessions    = JSON.parse(JSON.stringify(SAVE_DATA.sessions));
+let filters     = JSON.parse(JSON.stringify(SAVE_DATA.filters));
+let archived    = JSON.parse(JSON.stringify(SAVE_DATA.archived));
+
+// Load from localStorage if available (overrides baked-in data)
+loadFromStorage();
+
+let deck=[], idx=0, isFlipped=false, correct=0, wrong=0;
+
+// archived keys set for fast lookup
+function archivedKeys() { return new Set(archived.map(a=>a.es)); }
+
+function allCards() {
+  const ak = archivedKeys();
+  return [...BUILTIN, ...customWords].filter(c => !ak.has(c.es));
+}
+
+// ── SIDEBAR FILTERS ──
+function setSidebarCat(cat, btn) {
+  filters.cat = cat;
+  // Highlight active cat in sidebar
+  document.querySelectorAll('.sidebar-section .nav-item[onclick*="setSidebarCat"]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  // If we're on the study page, restart
+  if(document.getElementById('page-study').classList.contains('active')) restart();
+  else showPage('study', null, null);
+}
+
+function setSidebarDir(dir, btn) {
+  filters.dir = dir;
+  document.querySelectorAll('.nav-item[onclick*="setSidebarDir"]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(document.getElementById('page-study').classList.contains('active')) restart();
+  else showPage('study', null, null);
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+// ── PAGES ──
+const PAGE_TITLES = {
+  yours: 'Your Vocabulary',
+  custom: 'Added by You',
+  ciudad: 'La Ciudad y los Perros',
+  cronica: 'Crónica de una Muerte Anunciada',
+  all: 'All Cards'
+};
+
+function showPage(name, btnEl, src) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+
+  document.getElementById('page-'+name).classList.add('active');
+  if(btnEl) btnEl.classList.add('active');
+  closeSidebar();
+
+  if(name==='home') { updateHomeCounts(); return; }
+  if(name==='add')  { renderCustomList(); return; }
+  if(name==='archive') { renderArchiveList(); return; }
+  if(name==='stats')   { renderStats(); return; }
+
+  if(name==='study') {
+    if(src) {
+      filters.src = src;
+      filters.cat = 'all';
+      // Reset cat sidebar highlight to All
+      document.querySelectorAll('.sidebar-section .nav-item[onclick*="setSidebarCat"]').forEach(b=>b.classList.remove('active'));
+      const allCatBtn = document.getElementById('cat-all');
+      if(allCatBtn) allCatBtn.classList.add('active');
+    }
+    const title = PAGE_TITLES[filters.src] || 'Study';
+    document.getElementById('study-page-title').textContent = title;
+    document.getElementById('study-page-sub').textContent = '';
+    restart();
+  }
+}
+
+function updateHomeCounts() {
+  const ak = archivedKeys();
+  const cards = [...BUILTIN, ...customWords].filter(c=>!ak.has(c.es));
+  ['yours','ciudad','cronica','custom','all'].forEach(src=>{
+    const count = src==='all' ? cards.length : cards.filter(c=>c.src===src).length;
+    const el = document.getElementById('home-count-'+src);
+    if(el) el.textContent = count + ' cards';
+  });
+}
+
+// ── FILTERS ──
+function setFilter(type, val, btn) {
+  filters[type==='dir'?'dir':type==='src'?'src':'cat'] = val;
+  
+  const groupId = type==='dir' ? null : type==='src' ? null : 'cat-btns';
+  btn.closest('.btn-group').querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  restart();
+}
+
+// ── DECK BUILD ──
+function buildDeck() {
+  let cards = allCards();
+  if(filters.cat !== 'all') cards = cards.filter(c=>c.cat===filters.cat);
+  if(filters.src !== 'all') cards = cards.filter(c=>c.src===filters.src);
+  return shuffle([...cards]);
+}
+
+function shuffle(arr) {
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr;
+}
+
+// ── STUDY ──
+function restart() {
+  deck=buildDeck(); idx=0; correct=0; wrong=0; isFlipped=false;
+  document.getElementById('summary').classList.remove('show');
+  document.getElementById('study-main').style.display='';
+  document.getElementById('deck-count').textContent=`${deck.length} card${deck.length!==1?'s':''} in this set`;
+  updateScore(); renderCard();
+}
+
+const CAT_LABELS = {food:'Food',objects:'Object',body:'Body',emotions:'Emotion',nature:'Nature',literary:'Literary',misc:'Misc'};
+const SRC_LABELS = {yours:'Yours',custom:'Added',ciudad:'La Ciudad y los Perros',cronica:'Crónica de una Muerte Anunciada',preset:''};
+
+function renderCard() {
+  if(idx>=deck.length){ showSummary(); return; }
+  const card = deck[idx];
+  const esFirst = filters.dir==='es-en';
+  const inner = document.getElementById('card-inner');
+
+  // Instantly snap back to front with no transition, then re-enable
+  inner.style.transition = 'none';
+  inner.style.webkitTransition = 'none';
+  inner.classList.remove('flipped');
+  inner.getBoundingClientRect();
+  inner.style.transition = '';
+  inner.style.webkitTransition = '';
+
+  document.getElementById('front-word').textContent = esFirst ? card.es : card.en;
+  document.getElementById('back-word').textContent  = esFirst ? card.en : card.es;
+  document.getElementById('front-lang').textContent = esFirst ? 'Español' : 'English';
+  document.getElementById('back-lang').textContent  = esFirst ? 'English' : 'Español';
+  document.getElementById('card-cat-badge').textContent = CAT_LABELS[card.cat]||card.cat;
+  const srcBadge = document.getElementById('card-src-badge');
+  srcBadge.textContent = SRC_LABELS[card.src]||'';
+  srcBadge.className = 'badge ' + (card.src==='custom'?'badge-custom':card.src==='ciudad'||card.src==='cronica'?'badge-custom':card.src==='yours'?'badge-yours':'');
+  document.getElementById('answer-btns').classList.remove('visible');
+  isFlipped = false;
+  const pct = idx/deck.length*100;
+  document.getElementById('progress-bar').style.width = pct+'%';
+  document.getElementById('progress-text').textContent = `${idx+1} of ${deck.length}`;
+}
+
+function flipCard() {
+  const inner = document.getElementById('card-inner');
+  if(!isFlipped) {
+    isFlipped = true;
+    inner.classList.add('flipped');
+    setTimeout(()=>document.getElementById('answer-btns').classList.add('visible'), 280);
+  } else {
+    isFlipped = false;
+    inner.classList.remove('flipped');
+    document.getElementById('answer-btns').classList.remove('visible');
+  }
+}
+
+function answer(ok) {
+  if(ok) correct++; else wrong++;
+  idx++; updateScore(); renderCard();
+}
+
+function updateScore() {
+  document.getElementById('s-total').textContent=idx;
+  document.getElementById('s-correct').textContent=correct;
+  document.getElementById('s-wrong').textContent=wrong;
+}
+
+function showSummary() {
+  document.getElementById('study-main').style.display='none';
+  document.getElementById('summary').classList.add('show');
+  const pct = deck.length ? Math.round(correct/deck.length*100) : 0;
+  document.getElementById('summary-text').textContent=`${correct} of ${deck.length} correct — ${pct}%`;
+  document.getElementById('sum-correct').textContent=correct;
+  document.getElementById('sum-wrong').textContent=wrong;
+  // Save session
+  const session = {date:new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short'}), correct, total:deck.length, pct};
+  sessions.unshift(session);
+  if(sessions.length>20) sessions=sessions.slice(0,20);
+  persist();
+  renderHistory();
+}
+
+function renderHistory() {
+  const el = document.getElementById('history-list');
+  if(!sessions.length){ el.innerHTML='<div class="empty-state">No sessions yet</div>'; return; }
+  el.innerHTML = sessions.slice(0,8).map(s=>
+    `<div class="history-item"><span>${s.date}</span><span class="history-score">${s.correct}/${s.total} · ${s.pct}%</span></div>`
+  ).join('');
+}
+
+// ── ADD WORDS ──
+function addCustomWord() {
+  const es = document.getElementById('input-es').value.trim();
+  const en = document.getElementById('input-en').value.trim();
+  const cat = document.getElementById('input-cat').value;
+  if(!es||!en){ showAddMsg('Please fill in both fields.','var(--red)'); return; }
+  customWords.push({es,en,cat,src:'custom',added:Date.now()});
+  persist();
+  
+  document.getElementById('input-es').value='';
+  document.getElementById('input-en').value='';
+  showAddMsg(`✓ "${es}" added!`,'var(--green)');
+  renderCustomList();
+}
+
+function showAddMsg(msg, color) {
+  const el = document.getElementById('add-success');
+  el.textContent=msg; el.style.color=color; el.style.opacity='1';
+  setTimeout(()=>el.style.opacity='0', 2500);
+}
+
+function deleteCustomWord(i) {
+  customWords.splice(i,1);
+  persist();
+  renderCustomList();
+}
+
+function renderCustomList() {
+  const list = document.getElementById('custom-list');
+  document.getElementById('custom-count').textContent = customWords.length ? `(${customWords.length})` : '';
+  if(!customWords.length){list.innerHTML='<div class="empty-state">No custom words yet — add one above!</div>';return;}
+  list.innerHTML = customWords.map((w,i)=>
+    `<div class="custom-item">
+      <div class="custom-item-text">
+        <span class="custom-es">${w.es}</span>
+        <span class="custom-en">${w.en}</span>
+        <span class="custom-meta">${CAT_LABELS[w.cat]||w.cat}</span>
+      </div>
+      <button class="delete-btn" onclick="deleteCustomWord(${i})">✕</button>
+    </div>`
+  ).join('');
+}
+
+// ── ARCHIVE ──
+function archiveCurrent() {
+  if(idx >= deck.length) return;
+  const card = deck[idx];
+  // Add to archived if not already there
+  if(!archived.find(a=>a.es===card.es)) {
+    archived.unshift({...card, archivedAt: new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})});
+    persist();
+    
+  }
+  // Advance without counting as correct or wrong
+  deck.splice(idx, 1);
+  if(deck.length===0){ showSummary(); return; }
+  if(idx >= deck.length) idx = deck.length - 1;
+  document.getElementById('deck-count').textContent=`${deck.length} card${deck.length!==1?'s':''} in this set`;
+  renderCard();
+}
+
+function renderArchiveList() {
+  const el = document.getElementById('archive-list');
+  const cnt = document.getElementById('archive-count');
+  cnt.textContent = archived.length ? `(${archived.length})` : '';
+  if(!archived.length){ el.innerHTML='<div class="empty-state">No archived words yet. Hit Archive on any card you know completely.</div>'; return; }
+  el.innerHTML = archived.map((w,i)=>
+    `<div class="archive-item">
+      <div class="archive-item-text">
+        <span class="custom-es">${w.es}</span>
+        <span class="custom-en">${w.en}</span>
+        <span class="custom-meta">${CAT_LABELS[w.cat]||w.cat} · archived ${w.archivedAt||''}</span>
+      </div>
+      <button class="archive-restore-btn" onclick="restoreFromArchive(${i})">↩ Restore</button>
+    </div>`
+  ).join('');
+}
+
+function restoreFromArchive(i) {
+  archived.splice(i,1);
+  persist();
+  renderArchiveList();
+}
+
+// ── STORAGE ──
+function persist() {
+  try {
+    localStorage.setItem('vocab_custom',   JSON.stringify(customWords));
+    localStorage.setItem('vocab_sessions', JSON.stringify(sessions));
+    localStorage.setItem('vocab_filters',  JSON.stringify(filters));
+    localStorage.setItem('vocab_archived', JSON.stringify(archived));
+  } catch(e) {}
+}
+
+function loadFromStorage() {
+  function get(key, fallback) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
+  }
+  customWords = get('vocab_custom',   SAVE_DATA.customWords);
+  sessions    = get('vocab_sessions', SAVE_DATA.sessions);
+  filters     = get('vocab_filters',  SAVE_DATA.filters);
+  archived    = get('vocab_archived', SAVE_DATA.archived);
+}
+
+// ── SAVE ──
+function saveAndDownload() {
+  persist();
+  showSaveMsg('Saved.');
+}
+
+function showSaveMsg(msg) {
+  const el = document.getElementById('save-msg');
+  if(el){ el.textContent = msg; setTimeout(()=>el.textContent='', 5000); }
+}
+
+// ── STATS ──
+function renderStats() {
+  const custom  = customWords.length;
+  const arc     = archived.length;
+  const total   = BUILTIN.length + custom - arc;
+  const best    = sessions.length ? Math.max(...sessions.map(s=>s.pct))+'%' : '—';
+  document.getElementById('stat-total-cards').textContent = total;
+  document.getElementById('stat-custom').textContent = custom;
+  document.getElementById('stat-sessions').textContent = sessions.length;
+  document.getElementById('stat-best').textContent = best;
+  document.getElementById('stat-archived').textContent = arc;
+  const el = document.getElementById('stats-history-list');
+  if(!sessions.length){el.innerHTML='<div class="empty-state">Play a session to see history</div>';return;}
+  el.innerHTML = sessions.map(s=>
+    `<div class="history-item"><span>${s.date}</span><span class="history-score">${s.correct}/${s.total} · ${s.pct}%</span></div>`
+  ).join('');
+}
+
+// ── INIT ──
+updateHomeCounts();
+filters.src = 'all';
+filters.cat = 'all';
+// Set initial active states
+const catAllBtn = document.getElementById('cat-all');
+if(catAllBtn) catAllBtn.classList.add('active');
+const dirBtn = document.getElementById('dir-es-en');
+if(dirBtn) dirBtn.classList.add('active');
+</script>
+</body>
+</html>

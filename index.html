@@ -212,6 +212,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--cream);di
     <span class="sidebar-section-label">Books</span>
     <button class="nav-item" onclick="showPage('study',this,'ciudad')">La Ciudad y los Perros</button>
     <button class="nav-item" onclick="showPage('study',this,'cronica')">Crónica de una Muerte Anunciada</button>
+    <button class="nav-item" onclick="showPage('study',this,'casa')">La Casa de los Espíritus</button>
   </div>
   <div class="sidebar-section">
     <span class="sidebar-section-label">Category</span>
@@ -260,6 +261,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--cream);di
     <div class="deck-card" onclick="showPage('study',null,'cronica')">
       <div class="deck-card-title">Crónica de una Muerte Anunciada</div>
       <div class="deck-card-count" id="home-count-cronica"></div>
+      <div class="deck-card-btn">Study →</div>
+    </div>
+    <div class="deck-card" onclick="showPage('study',null,'casa')">
+      <div class="deck-card-title">La Casa de los Espíritus</div>
+      <div class="deck-card-count" id="home-count-casa"></div>
       <div class="deck-card-btn">Study →</div>
     </div>
     <div class="deck-card" onclick="showPage('study',null,'all')">
@@ -992,6 +998,235 @@ const BUILTIN = [
   {es:"absolver",en:"to absolve / to acquit / to clear of blame",cat:"misc",src:"cronica"},
   {es:"la absolución",en:"absolution / acquittal / clearance of guilt",cat:"misc",src:"cronica"},
   {es:"la condena",en:"condemnation / sentence / conviction",cat:"misc",src:"cronica"},
+
+  // ── LA CASA DE LOS ESPÍRITUS ──
+  // SUPERNATURAL / SPIRITS
+  {es:"el espíritu",en:"spirit / ghost",cat:"misc",src:"casa"},
+  {es:"la clarividencia",en:"clairvoyance / second sight",cat:"misc",src:"casa"},
+  {es:"la telepatía",en:"telepathy",cat:"misc",src:"casa"},
+  {es:"la premonición",en:"premonition / foreboding",cat:"emotions",src:"casa"},
+  {es:"la levitación",en:"levitation",cat:"misc",src:"casa"},
+  {es:"el augurio",en:"augury / omen / sign of what is to come",cat:"literary",src:"casa"},
+  {es:"la videncia",en:"clairvoyance / second sight / gift of prophecy",cat:"misc",src:"casa"},
+  {es:"el embrujo",en:"spell / bewitchment / enchantment",cat:"misc",src:"casa"},
+  {es:"la médium",en:"medium / spiritualist",cat:"misc",src:"casa"},
+  {es:"lo sobrenatural",en:"the supernatural",cat:"misc",src:"casa"},
+  {es:"el sortilegio",en:"spell / sorcery / charm",cat:"misc",src:"casa"},
+  {es:"el conjuro",en:"incantation / spell / hex",cat:"misc",src:"casa"},
+  {es:"la hechicera",en:"sorceress / witch",cat:"misc",src:"casa"},
+  {es:"el brujo",en:"sorcerer / warlock / witch doctor",cat:"misc",src:"casa"},
+  {es:"la brujería",en:"witchcraft / sorcery",cat:"misc",src:"casa"},
+  {es:"el talismán",en:"talisman / lucky charm",cat:"objects",src:"casa"},
+  {es:"el oráculo",en:"oracle",cat:"misc",src:"casa"},
+  {es:"el adivino",en:"fortune teller / soothsayer",cat:"misc",src:"casa"},
+  {es:"la nigromancia",en:"necromancy / black magic",cat:"misc",src:"casa"},
+  {es:"el encantamiento",en:"enchantment / spell",cat:"misc",src:"casa"},
+  {es:"el portento",en:"portent / marvel / wonder",cat:"literary",src:"casa"},
+  {es:"la aparición",en:"apparition / ghost / vision",cat:"misc",src:"casa"},
+  {es:"el fantasma",en:"ghost / phantom / spectre",cat:"misc",src:"casa"},
+  {es:"el umbral",en:"threshold / doorstep / boundary",cat:"objects",src:"casa"},
+  {es:"lo etéreo",en:"the ethereal / the otherworldly",cat:"literary",src:"casa"},
+  {es:"la aura",en:"aura / energy field",cat:"misc",src:"casa"},
+  {es:"el presentimiento",en:"presentiment / gut feeling / sense of dread",cat:"emotions",src:"casa"},
+  {es:"la revelación",en:"revelation",cat:"misc",src:"casa"},
+  {es:"el milagro",en:"miracle",cat:"misc",src:"casa"},
+  // CHILEAN POLITICS / SOCIAL CLASS
+  {es:"el marxismo",en:"Marxism",cat:"misc",src:"casa"},
+  {es:"el socialismo",en:"socialism",cat:"misc",src:"casa"},
+  {es:"el conservador",en:"conservative",cat:"misc",src:"casa"},
+  {es:"el liberal",en:"liberal",cat:"misc",src:"casa"},
+  {es:"el terrateniente",en:"landowner / landlord",cat:"misc",src:"casa"},
+  {es:"la aristocracia",en:"aristocracy",cat:"misc",src:"casa"},
+  {es:"el militante",en:"militant / activist",cat:"misc",src:"casa"},
+  {es:"la huelga",en:"strike / work stoppage",cat:"misc",src:"casa"},
+  {es:"el sindicato",en:"trade union / labor union",cat:"misc",src:"casa"},
+  {es:"la manifestación",en:"protest / demonstration",cat:"misc",src:"casa"},
+  {es:"el movimiento obrero",en:"labor movement / workers movement",cat:"misc",src:"casa"},
+  {es:"la barricada",en:"barricade",cat:"objects",src:"casa"},
+  {es:"el mártir",en:"martyr",cat:"misc",src:"casa"},
+  {es:"la resistencia",en:"resistance",cat:"misc",src:"casa"},
+  {es:"el clandestino",en:"clandestine / underground / secret",cat:"misc",src:"casa"},
+  {es:"la conspiración",en:"conspiracy / plot",cat:"misc",src:"casa"},
+  {es:"el traidor",en:"traitor",cat:"misc",src:"casa"},
+  {es:"la purga",en:"purge",cat:"misc",src:"casa"},
+  {es:"el estado de sitio",en:"state of siege / martial law",cat:"misc",src:"casa"},
+  {es:"la amnistía",en:"amnesty",cat:"misc",src:"casa"},
+  {es:"el exiliado",en:"exile / person in exile",cat:"misc",src:"casa"},
+  {es:"el refugiado",en:"refugee",cat:"misc",src:"casa"},
+  {es:"la persecución",en:"persecution / pursuit",cat:"misc",src:"casa"},
+  {es:"el espionaje",en:"espionage / spying",cat:"misc",src:"casa"},
+  {es:"el infiltrado",en:"infiltrator / mole",cat:"misc",src:"casa"},
+  {es:"el colaboracionista",en:"collaborator / collaborationist",cat:"misc",src:"casa"},
+  {es:"la censura",en:"censorship",cat:"misc",src:"casa"},
+  {es:"la propaganda",en:"propaganda",cat:"misc",src:"casa"},
+  {es:"el latifundio",en:"large estate / landed property",cat:"misc",src:"casa"},
+  {es:"el campesino",en:"peasant / farm worker",cat:"misc",src:"casa"},
+  {es:"el patrón",en:"master / boss / landowner",cat:"misc",src:"casa"},
+  {es:"la hacienda",en:"estate / ranch / plantation",cat:"misc",src:"casa"},
+  {es:"el golpe de estado",en:"coup d'état",cat:"misc",src:"casa"},
+  {es:"la dictadura",en:"dictatorship",cat:"misc",src:"casa"},
+  {es:"el régimen",en:"regime",cat:"misc",src:"casa"},
+  {es:"la reforma agraria",en:"agrarian reform / land reform",cat:"misc",src:"casa"},
+  {es:"la oligarquía",en:"oligarchy",cat:"misc",src:"casa"},
+  {es:"el proletariado",en:"proletariat / working class",cat:"misc",src:"casa"},
+  {es:"el senador",en:"senator",cat:"misc",src:"casa"},
+  {es:"la burguesía",en:"bourgeoisie / middle class",cat:"misc",src:"casa"},
+  {es:"el exilio",en:"exile",cat:"misc",src:"casa"},
+  {es:"la represión",en:"repression",cat:"misc",src:"casa"},
+  {es:"la junta militar",en:"military junta",cat:"misc",src:"casa"},
+  {es:"el desaparecido",en:"disappeared person / political disappearance",cat:"misc",src:"casa"},
+  {es:"la tortura",en:"torture",cat:"misc",src:"casa"},
+  {es:"el detenido",en:"detainee / prisoner",cat:"misc",src:"casa"},
+  {es:"el interrogatorio",en:"interrogation",cat:"misc",src:"casa"},
+  // VIOLENCE / REPRESSION
+  {es:"el escuadrón de la muerte",en:"death squad",cat:"misc",src:"casa"},
+  {es:"la desaparición forzada",en:"forced disappearance",cat:"misc",src:"casa"},
+  {es:"el prisionero político",en:"political prisoner",cat:"misc",src:"casa"},
+  {es:"el campo de concentración",en:"concentration camp",cat:"misc",src:"casa"},
+  {es:"la sala de torturas",en:"torture chamber",cat:"misc",src:"casa"},
+  {es:"el verdugo",en:"executioner / torturer / hangman",cat:"misc",src:"casa"},
+  {es:"el pelotón de fusilamiento",en:"firing squad",cat:"misc",src:"casa"},
+  {es:"la ejecución",en:"execution",cat:"misc",src:"casa"},
+  {es:"el asesinato",en:"murder / assassination",cat:"misc",src:"casa"},
+  {es:"el atentado",en:"attack / assassination attempt",cat:"misc",src:"casa"},
+  {es:"la masacre",en:"massacre",cat:"misc",src:"casa"},
+  {es:"la matanza",en:"slaughter / killing / massacre",cat:"misc",src:"casa"},
+  {es:"la represalia",en:"reprisal / retaliation",cat:"misc",src:"casa"},
+  {es:"el secuestro",en:"kidnapping / abduction",cat:"misc",src:"casa"},
+  {es:"el rehén",en:"hostage",cat:"misc",src:"casa"},
+  {es:"el tormento",en:"torment / torture",cat:"emotions",src:"casa"},
+  {es:"la herida de bala",en:"bullet wound",cat:"body",src:"casa"},
+  // WOMEN / FEMALE EXPERIENCE
+  {es:"el feminismo",en:"feminism",cat:"misc",src:"casa"},
+  {es:"la emancipación",en:"emancipation / liberation",cat:"misc",src:"casa"},
+  {es:"la opresión",en:"oppression",cat:"misc",src:"casa"},
+  {es:"la sumisión",en:"submission / subservience",cat:"emotions",src:"casa"},
+  {es:"la rebeldía",en:"rebellion / defiance",cat:"emotions",src:"casa"},
+  {es:"la abnegación",en:"self-denial / self-sacrifice",cat:"emotions",src:"casa"},
+  {es:"la viuda",en:"widow",cat:"misc",src:"casa"},
+  {es:"la solterona",en:"spinster / old maid",cat:"misc",src:"casa"},
+  {es:"la concubina",en:"concubine / mistress",cat:"misc",src:"casa"},
+  {es:"la amante",en:"lover / mistress",cat:"misc",src:"casa"},
+  {es:"el adulterio",en:"adultery",cat:"misc",src:"casa"},
+  {es:"la fidelidad",en:"fidelity / faithfulness",cat:"emotions",src:"casa"},
+  {es:"la infidelidad",en:"infidelity / unfaithfulness",cat:"emotions",src:"casa"},
+  {es:"el embarazo",en:"pregnancy",cat:"body",src:"casa"},
+  {es:"el parto",en:"childbirth / labor",cat:"body",src:"casa"},
+  {es:"el aborto",en:"abortion / miscarriage",cat:"misc",src:"casa"},
+  {es:"la lactancia",en:"breastfeeding / nursing",cat:"body",src:"casa"},
+  {es:"la crianza",en:"upbringing / child-rearing",cat:"misc",src:"casa"},
+  {es:"la orfandad",en:"orphanhood",cat:"misc",src:"casa"},
+  {es:"la fortaleza",en:"strength / fortitude / fortress",cat:"emotions",src:"casa"},
+  // FAMILY DYNAMICS
+  {es:"el patriarcado",en:"patriarchy",cat:"misc",src:"casa"},
+  {es:"el matriarcado",en:"matriarchy",cat:"misc",src:"casa"},
+  {es:"la dinastía",en:"dynasty",cat:"misc",src:"casa"},
+  {es:"la saga familiar",en:"family saga",cat:"literary",src:"casa"},
+  {es:"el conflicto generacional",en:"generational conflict",cat:"misc",src:"casa"},
+  {es:"el legado",en:"legacy / inheritance / bequest",cat:"misc",src:"casa"},
+  {es:"la herencia",en:"inheritance / heritage",cat:"misc",src:"casa"},
+  {es:"el testamento",en:"will / testament",cat:"misc",src:"casa"},
+  {es:"el primogénito",en:"firstborn / eldest child",cat:"misc",src:"casa"},
+  {es:"el vástago",en:"offspring / descendant / scion",cat:"misc",src:"casa"},
+  {es:"el cuñado",en:"brother-in-law",cat:"misc",src:"casa"},
+  {es:"la nuera",en:"daughter-in-law",cat:"misc",src:"casa"},
+  {es:"el suegro",en:"father-in-law",cat:"misc",src:"casa"},
+  {es:"el yerno",en:"son-in-law",cat:"misc",src:"casa"},
+  {es:"el ahijado",en:"godson / godchild",cat:"misc",src:"casa"},
+  {es:"la madrina",en:"godmother / patron",cat:"misc",src:"casa"},
+  {es:"el patriarca",en:"patriarch",cat:"misc",src:"casa"},
+  {es:"la matriarca",en:"matriarch",cat:"misc",src:"casa"},
+  {es:"el bastardo",en:"bastard / illegitimate child",cat:"misc",src:"casa"},
+  {es:"el heredero",en:"heir",cat:"misc",src:"casa"},
+  {es:"la doncella",en:"maiden / young woman / maidservant",cat:"misc",src:"casa"},
+  {es:"el luto",en:"mourning / grief",cat:"emotions",src:"casa"},
+  {es:"el cortejo",en:"courtship / procession",cat:"misc",src:"casa"},
+  {es:"el apellido",en:"surname / family name",cat:"misc",src:"casa"},
+  {es:"el linaje",en:"lineage / bloodline",cat:"misc",src:"casa"},
+  // NATURE / CHILEAN LANDSCAPE
+  {es:"el terremoto",en:"earthquake",cat:"nature",src:"casa"},
+  {es:"la cordillera",en:"mountain range / the Andes",cat:"nature",src:"casa"},
+  {es:"el valle",en:"valley",cat:"nature",src:"casa"},
+  {es:"la sequía",en:"drought",cat:"nature",src:"casa"},
+  {es:"la cosecha",en:"harvest",cat:"nature",src:"casa"},
+  {es:"la siembra",en:"sowing / planting season",cat:"nature",src:"casa"},
+  {es:"el fundo",en:"rural estate / farm (Chilean term)",cat:"misc",src:"casa"},
+  {es:"la marejada",en:"heavy sea / swell / tidal surge",cat:"nature",src:"casa"},
+  {es:"el temporal",en:"storm / bad weather",cat:"nature",src:"casa"},
+  {es:"el volcán",en:"volcano",cat:"nature",src:"casa"},
+  {es:"la lava",en:"lava",cat:"nature",src:"casa"},
+  {es:"el temblor",en:"tremor / small earthquake",cat:"nature",src:"casa"},
+  {es:"el derrumbe",en:"landslide / collapse / cave-in",cat:"nature",src:"casa"},
+  {es:"el aluvión",en:"mudslide / flood / avalanche",cat:"nature",src:"casa"},
+  {es:"el aguacero",en:"downpour / heavy shower",cat:"nature",src:"casa"},
+  {es:"el diluvio",en:"deluge / flood / downpour",cat:"nature",src:"casa"},
+  {es:"la inundación",en:"flood / flooding",cat:"nature",src:"casa"},
+  {es:"la brisa",en:"breeze",cat:"nature",src:"casa"},
+  {es:"la tierra árida",en:"arid land / barren earth",cat:"nature",src:"casa"},
+  {es:"el sembradío",en:"cultivated field / crop field",cat:"nature",src:"casa"},
+  {es:"la viña",en:"vineyard",cat:"nature",src:"casa"},
+  {es:"el olivar",en:"olive grove",cat:"nature",src:"casa"},
+  {es:"el huerto",en:"orchard / vegetable garden",cat:"nature",src:"casa"},
+  {es:"el surco",en:"furrow / groove / rut",cat:"nature",src:"casa"},
+  {es:"el arado",en:"plow / plough",cat:"objects",src:"casa"},
+  {es:"el ganado",en:"livestock / cattle",cat:"misc",src:"casa"},
+  {es:"la trilla",en:"threshing",cat:"misc",src:"casa"},
+  // OBJECTS / DOMESTIC
+  {es:"el arcón",en:"large chest / coffer",cat:"objects",src:"casa"},
+  {es:"el candado",en:"padlock",cat:"objects",src:"casa"},
+  {es:"la cerradura",en:"lock",cat:"objects",src:"casa"},
+  {es:"la celosía",en:"lattice / jalousie / venetian blind",cat:"objects",src:"casa"},
+  {es:"el corredor",en:"corridor / hallway / veranda",cat:"objects",src:"casa"},
+  {es:"el zaguán",en:"entrance hall / vestibule / porch",cat:"objects",src:"casa"},
+  {es:"la alcoba",en:"bedroom / alcove / chamber",cat:"objects",src:"casa"},
+  {es:"el brasero",en:"brazier / charcoal heater",cat:"objects",src:"casa"},
+  {es:"el quinqué",en:"oil lamp / kerosene lamp",cat:"objects",src:"casa"},
+  {es:"el incienso",en:"incense",cat:"objects",src:"casa"},
+  {es:"el sahumerio",en:"incense smoke / aromatic fumigation",cat:"objects",src:"casa"},
+  {es:"el altar",en:"altar",cat:"objects",src:"casa"},
+  {es:"el crucifijo",en:"crucifix",cat:"objects",src:"casa"},
+  {es:"el rosario",en:"rosary",cat:"objects",src:"casa"},
+  {es:"el escapulario",en:"scapular / religious garment worn around neck",cat:"objects",src:"casa"},
+  {es:"la reliquia",en:"relic",cat:"objects",src:"casa"},
+  {es:"el retrato",en:"portrait / picture",cat:"objects",src:"casa"},
+  // LITERARY / HARD VOCABULARY
+  {es:"el palimpsesto",en:"palimpsest / layered text",cat:"literary",src:"casa"},
+  {es:"la crónica familiar",en:"family chronicle",cat:"literary",src:"casa"},
+  {es:"el narrador omnisciente",en:"omniscient narrator",cat:"literary",src:"casa"},
+  {es:"la voz narrativa",en:"narrative voice",cat:"literary",src:"casa"},
+  {es:"el diario íntimo",en:"personal diary / intimate journal",cat:"literary",src:"casa"},
+  {es:"el olvido",en:"forgetting / oblivion",cat:"literary",src:"casa"},
+  {es:"la redención",en:"redemption",cat:"literary",src:"casa"},
+  {es:"el ciclo",en:"cycle",cat:"literary",src:"casa"},
+  {es:"lo etéreo",en:"the ethereal / the otherworldly",cat:"literary",src:"casa"},
+  {es:"la profecía",en:"prophecy",cat:"literary",src:"casa"},
+  {es:"la maldición",en:"curse",cat:"misc",src:"casa"},
+  {es:"el exorcismo",en:"exorcism",cat:"misc",src:"casa"},
+  {es:"el laberinto",en:"labyrinth / maze",cat:"literary",src:"casa"},
+  {es:"la prosapia",en:"lineage / distinguished ancestry",cat:"literary",src:"casa"},
+  {es:"el caudillo",en:"political strongman / warlord",cat:"misc",src:"casa"},
+  {es:"el ajuste de cuentas",en:"settling of scores",cat:"misc",src:"casa"},
+  {es:"el mayorazgo",en:"primogeniture / eldest son inheritance",cat:"misc",src:"casa"},
+  {es:"el inquilino",en:"tenant farmer / sharecropper",cat:"misc",src:"casa"},
+  {es:"el estanciero",en:"ranch owner",cat:"misc",src:"casa"},
+  {es:"la turbamulta",en:"mob / unruly crowd",cat:"misc",src:"casa"},
+  {es:"el escrutinio",en:"scrutiny / close examination",cat:"misc",src:"casa"},
+  // EMOTIONS
+  {es:"la melancolía",en:"melancholy / sadness",cat:"emotions",src:"casa"},
+  {es:"el desarraigo",en:"uprooting / displacement / rootlessness",cat:"emotions",src:"casa"},
+  {es:"la soledad",en:"solitude / loneliness",cat:"emotions",src:"casa"},
+  {es:"el delirio",en:"delirium / madness / frenzy",cat:"emotions",src:"casa"},
+  {es:"la locura",en:"madness / insanity",cat:"emotions",src:"casa"},
+  {es:"la paranoia",en:"paranoia",cat:"emotions",src:"casa"},
+  {es:"la obsesión",en:"obsession",cat:"emotions",src:"casa"},
+  {es:"el fanatismo",en:"fanaticism",cat:"emotions",src:"casa"},
+  {es:"la devoción",en:"devotion / dedication",cat:"emotions",src:"casa"},
+  {es:"la ternura",en:"tenderness / warmth",cat:"emotions",src:"casa"},
+  {es:"la compasión",en:"compassion / pity",cat:"emotions",src:"casa"},
+  {es:"la amargura",en:"bitterness / sorrow",cat:"emotions",src:"casa"},
+  {es:"la venganza",en:"revenge / vengeance",cat:"emotions",src:"casa"},
+  {es:"la reconciliación",en:"reconciliation",cat:"emotions",src:"casa"},
+  {es:"el perdón",en:"forgiveness / pardon",cat:"emotions",src:"casa"},
 ];
 
 // ── INLINE SAVE DATA (progress baked into this file) ──
@@ -1055,6 +1290,7 @@ const PAGE_TITLES = {
   custom: 'Added by You',
   ciudad: 'La Ciudad y los Perros',
   cronica: 'Crónica de una Muerte Anunciada',
+  casa: 'La Casa de los Espíritus',
   all: 'All Cards'
 };
 
@@ -1091,7 +1327,7 @@ function showPage(name, btnEl, src) {
 function updateHomeCounts() {
   const ak = archivedKeys();
   const cards = [...BUILTIN, ...customWords].filter(c=>!ak.has(c.es));
-  ['yours','ciudad','cronica','custom','all'].forEach(src=>{
+  ['yours','ciudad','cronica','casa','custom','all'].forEach(src=>{
     const count = src==='all' ? cards.length : cards.filter(c=>c.src===src).length;
     const el = document.getElementById('home-count-'+src);
     if(el) el.textContent = count + ' cards';
@@ -1131,7 +1367,7 @@ function restart() {
 }
 
 const CAT_LABELS = {food:'Food',objects:'Object',body:'Body',emotions:'Emotion',nature:'Nature',literary:'Literary',misc:'Misc'};
-const SRC_LABELS = {yours:'Yours',custom:'Added',ciudad:'La Ciudad y los Perros',cronica:'Crónica de una Muerte Anunciada',preset:''};
+const SRC_LABELS = {yours:'Yours',custom:'Added',ciudad:'La Ciudad y los Perros',cronica:'Crónica de una Muerte Anunciada',casa:'La Casa de los Espíritus',preset:''};
 
 function renderCard() {
   if(idx>=deck.length){ showSummary(); return; }
@@ -1154,7 +1390,7 @@ function renderCard() {
   document.getElementById('card-cat-badge').textContent = CAT_LABELS[card.cat]||card.cat;
   const srcBadge = document.getElementById('card-src-badge');
   srcBadge.textContent = SRC_LABELS[card.src]||'';
-  srcBadge.className = 'badge ' + (card.src==='custom'?'badge-custom':card.src==='ciudad'||card.src==='cronica'?'badge-custom':card.src==='yours'?'badge-yours':'');
+  srcBadge.className = 'badge ' + (card.src==='custom'?'badge-custom':card.src==='ciudad'||card.src==='cronica'||card.src==='casa'?'badge-custom':card.src==='yours'?'badge-yours':'');
   document.getElementById('answer-btns').classList.remove('visible');
   isFlipped = false;
   const pct = idx/deck.length*100;
